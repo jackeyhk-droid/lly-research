@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eli Lilly (LLY) Research Pipeline Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--red:#D52B1E;--dk:#0a0a14;--s1:#111120;--s2:#191930;--s3:#222242;--s4:#2a2a4a;
+--gold:#e8b830;--teal:#2dd4bf;--blue:#60a5fa;--purple:#a78bfa;--pink:#f472b6;--orange:#fb923c;--green:#4ade80;
+--t1:#f0f0f5;--t2:#b0b0c8;--t3:#7a7a95;--bdr:rgba(255,255,255,.07)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,-apple-system,'SF Pro Display','Segoe UI',sans-serif;background:var(--dk);color:var(--t1);line-height:1.65;font-size:16px;font-feature-settings:'cv01','cv02','tnum';-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+.ctr{max-width:1440px;margin:0 auto;padding:0 28px}
+.hero{background:linear-gradient(135deg,var(--s1),#1a1030 50%,#0f1a2e);border-bottom:1px solid var(--bdr);padding:44px 0 36px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%,rgba(213,43,30,.06),transparent 60%);pointer-events:none}
+.hrow{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;flex-wrap:wrap;position:relative}
+h1{font-size:44px;font-weight:bold;letter-spacing:-.5px}
+h1 .br{color:var(--red)}
+.sub{font-size:16px;color:var(--t2);margin-top:6px}
+.ctrls{display:flex;gap:12px;align-items:center;margin-top:8px}
+.ltog{display:flex;border-radius:8px;overflow:hidden;border:1px solid var(--bdr);background:var(--s2)}
+.lb{padding:10px 20px;border:none;background:transparent;color:var(--t2);cursor:pointer;font-size:15px;font-weight:bold;font-family:inherit;transition:.2s}
+.lb.act{background:var(--red);color:#fff}
+.sb{background:var(--s2);border:1px solid var(--bdr);border-radius:10px;padding:10px 16px;color:var(--t1);font-size:15px;font-family:inherit;width:220px;outline:none}
+.sb:focus{border-color:rgba(213,43,30,.4)}.sb::placeholder{color:var(--t3)}
+.ks{padding:36px 0 12px}
+.kt{font-size:14px;text-transform:uppercase;letter-spacing:2.5px;color:var(--t3);margin-bottom:16px;font-weight:bold}
+.kg{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:12px}
+.kc{background:var(--s1);border:1px solid var(--bdr);border-radius:12px;padding:18px 20px;position:relative;overflow:hidden;transition:transform .2s}
+.kc:hover{transform:translateY(-2px)}
+.kc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.kc[data-c="r"]::before{background:var(--red)}.kc[data-c="p"]::before{background:var(--pink)}.kc[data-c="b"]::before{background:var(--blue)}.kc[data-c="t"]::before{background:var(--teal)}.kc[data-c="u"]::before{background:var(--purple)}.kc[data-c="o"]::before{background:var(--orange)}.kc[data-c="g"]::before{background:var(--gold)}
+.kl{font-size:12px;color:var(--t3);font-weight:bold;text-transform:uppercase;letter-spacing:1px}
+.kv{font-size:28px;font-weight:bold;margin:4px 0;letter-spacing:-.5px}
+.kd{font-size:14px;color:var(--t2)}
+.kgr{font-size:13px;font-weight:bold;margin-top:4px;color:var(--green)}
+.gs{background:var(--s1);border:1px solid var(--bdr);border-radius:12px;padding:20px 24px;margin-top:16px;display:flex;gap:24px;flex-wrap:wrap;align-items:center}
+.gi{flex:1;min-width:150px}.gi .gl{font-size:12px;color:var(--t3);text-transform:uppercase;letter-spacing:1.5px;font-weight:bold}.gi .gv{font-size:22px;font-weight:bold;margin-top:3px}.gi .gss{font-size:13px;color:var(--t2)}
+.sec{padding:32px 0}
+.st{font-size:28px;font-weight:bold;margin-bottom:18px;letter-spacing:-.3px}
+.tlt{display:flex;min-width:900px;position:relative;padding:36px 0 0}
+.tll{position:absolute;top:54px;left:40px;right:40px;height:3px;background:linear-gradient(90deg,var(--green),var(--gold),var(--blue),var(--purple));border-radius:2px}
+.tli{flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;position:relative;min-width:140px}
+.tld{width:16px;height:16px;border-radius:50%;border:3px solid;z-index:2;margin-bottom:14px;background:var(--dk)}
+.tld.past{border-color:var(--green);background:var(--green)}.tld.now{border-color:var(--gold);box-shadow:0 0 12px rgba(232,184,48,.5);animation:pls 2s infinite}.tld.fut{border-color:var(--blue)}
+@keyframes pls{0%,100%{box-shadow:0 0 8px rgba(232,184,48,.4)}50%{box-shadow:0 0 16px rgba(232,184,48,.7)}}
+.tln{font-size:15px;font-weight:bold;margin-bottom:3px}.tldt{font-size:13px;color:var(--t3);font-weight:bold;margin-bottom:3px}.tldc{font-size:13px;color:var(--t2);max-width:140px}
+.tls{overflow-x:auto;padding-bottom:12px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
+.tli{scroll-snap-align:start}
+
+/* STICKY FILTER BAR */
+.sticky-bar{position:sticky;top:0;z-index:10;background:rgba(10,10,20,.85);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:16px 0 12px;margin:0 -28px;padding-left:28px;padding-right:28px;border-bottom:1px solid var(--bdr);transition:box-shadow .3s}
+.sticky-bar.scrolled{box-shadow:0 4px 20px rgba(0,0,0,.4)}
+
+.sh{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:12px}
+.pills{display:flex;gap:6px;flex-wrap:wrap}
+.pill{padding:8px 18px;border-radius:20px;border:1px solid var(--bdr);background:transparent;color:var(--t2);cursor:pointer;font-size:15px;font-weight:bold;font-family:inherit;transition:.2s}
+.pill.act,.pill:hover{background:var(--red);color:#fff;border-color:var(--red)}
+/* Secondary filter pills (phase/status) */
+.pill2{padding:6px 14px;border-radius:16px;border:1px solid var(--bdr);background:transparent;color:var(--t2);cursor:pointer;font-size:13px;font-weight:bold;font-family:inherit;transition:.2s}
+.pill2.act{border-color:var(--blue);color:var(--blue);background:rgba(96,165,250,.1)}
+.pill2:hover{border-color:rgba(255,255,255,.2)}
+.filter-row{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
+.filter-label{font-size:12px;color:var(--t3);text-transform:uppercase;letter-spacing:1px;font-weight:bold;margin-right:4px}
+/* Expand/Collapse button */
+.exp-all-btn{padding:6px 16px;border-radius:8px;border:1px solid var(--bdr);background:var(--s2);color:var(--t2);cursor:pointer;font-size:13px;font-weight:bold;font-family:inherit;transition:.2s;white-space:nowrap}
+.exp-all-btn:hover{background:var(--s3);color:var(--t1);border-color:rgba(255,255,255,.15)}
+/* Empty state */
+.empty-state{text-align:center;padding:60px 20px;color:var(--t3)}
+.empty-state .es-icon{font-size:48px;margin-bottom:12px;opacity:.5}
+.empty-state .es-title{font-size:20px;font-weight:bold;color:var(--t2);margin-bottom:6px}
+.empty-state .es-sub{font-size:15px}
+.ps{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap}
+.psc{background:var(--s2);border:1px solid var(--bdr);border-radius:10px;padding:12px 18px}
+.psc .pn{font-size:26px;font-weight:bold}.psc .pl{font-size:13px;color:var(--t2);text-transform:uppercase;letter-spacing:.8px;font-weight:bold}
+.psc.rv .pn{color:var(--pink)}.psc.p3 .pn{color:var(--blue)}.psc.p2 .pn{color:var(--gold)}.psc.ap .pn{color:var(--green)}
+.pg{display:flex;flex-direction:column;gap:8px}
+.dc{background:var(--s1);border:1px solid var(--bdr);border-radius:14px;overflow:hidden;transition:border-color .2s}
+.dc:hover{border-color:rgba(255,255,255,.12)}
+.dh{display:grid;grid-template-columns:40px 1.4fr 140px 130px 180px 40px;align-items:center;padding:20px 22px;gap:14px;min-height:76px;cursor:pointer}
+@media(max-width:1000px){.dh{grid-template-columns:30px 1fr 110px 40px}.dh .ct,.dh .cta{display:none}}
+.dn{font-size:20px;font-weight:bold}.dg{font-size:15px;color:var(--t2);margin-top:3px}
+.pp{display:inline-flex;padding:6px 14px;border-radius:7px;font-size:14px;font-weight:bold;white-space:nowrap}
+.pp.approved{background:rgba(74,222,128,.12);color:#4ade80}.pp.review{background:rgba(244,114,182,.12);color:#f472b6}.pp.p3{background:rgba(96,165,250,.12);color:#60a5fa}.pp.p2{background:rgba(251,191,36,.12);color:#fbbf24}.pp.p1{background:rgba(167,139,250,.12);color:#a78bfa}
+.tc2{display:inline-block;padding:4px 10px;border-radius:5px;font-size:14px;font-weight:bold}
+.tc2.cm{background:rgba(213,43,30,.1);color:#f87171}.tc2.on{background:rgba(96,165,250,.1);color:#60a5fa}.tc2.im{background:rgba(45,212,191,.1);color:#2dd4bf}.tc2.ns{background:rgba(167,139,250,.1);color:#a78bfa}
+.ti{font-size:15px;color:var(--t2)}.ti strong{color:var(--t1);font-weight:bold}
+.tds{display:flex;gap:4px;margin-top:4px}.tds span{width:8px;height:8px;border-radius:50%}.tds .s{background:var(--green)}.tds .a{background:var(--blue)}.tds .p{background:var(--gold)}
+.ei{width:24px;height:24px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:var(--s3);color:var(--t2);font-size:13px;transition:transform .3s}
+.dc.open .ei{transform:rotate(180deg)}
+.dd{max-height:0;overflow:hidden;transition:max-height .5s ease}.dc.open .dd{max-height:5000px}
+.di{padding:0 22px 24px;border-top:1px solid var(--bdr)}
+.dtabs{display:flex;gap:0;margin:16px 0 14px;border-bottom:2px solid var(--bdr)}
+.dtab{padding:10px 20px;font-size:16px;font-weight:bold;color:var(--t3);cursor:pointer;border-bottom:3px solid transparent;transition:.2s}
+.dtab.act{color:var(--red);border-bottom-color:var(--red)}
+.dtc{display:none}.dtc.act{display:block}
+.ibox{background:var(--s2);border-radius:10px;padding:18px 20px;margin-top:10px}
+.ibox h5{font-size:13px;text-transform:uppercase;letter-spacing:1.5px;color:var(--t3);margin-bottom:8px;font-weight:bold}
+.ibox p{font-size:16px;color:var(--t2);line-height:1.75}
+.il{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.ir{background:var(--s2);border-radius:10px;padding:16px 20px;cursor:pointer;transition:background .2s;border:1px solid transparent}
+.ir:hover{background:var(--s3);border-color:rgba(255,255,255,.08)}
+.ir-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+.ir-name{font-size:17px;font-weight:bold;color:var(--t1)}
+.ir-meta{display:flex;gap:8px;align-items:center;flex-shrink:0}
+.ir-st{font-size:13px;font-weight:bold;padding:3px 10px;border-radius:5px}
+.ir-st.s{background:rgba(74,222,128,.1);color:var(--green)}.ir-st.a{background:rgba(96,165,250,.1);color:var(--blue)}.ir-st.p{background:rgba(232,184,48,.1);color:var(--gold)}
+.ir-dt{font-size:13px;color:var(--t3);font-weight:bold}
+.ir-brief{font-size:15px;color:var(--t2);margin-top:6px;line-height:1.6}
+.ir-brief strong{color:var(--teal)}
+.ir-click{font-size:12px;color:var(--t3);margin-top:6px;font-style:italic}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:1000;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px)}
+.modal-overlay.show{display:flex}
+.modal{background:var(--s1);border:1px solid var(--bdr);border-radius:16px;max-width:780px;width:100%;max-height:85vh;overflow-y:auto;padding:0;position:relative;animation:mIn .3s ease}
+@keyframes mIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+.modal-close{position:absolute;top:16px;right:18px;background:var(--s3);border:none;color:var(--t1);width:36px;height:36px;border-radius:50%;font-size:20px;cursor:pointer;z-index:2;display:flex;align-items:center;justify-content:center}
+.modal-close:hover{background:var(--red)}
+.mh{padding:28px 28px 0;border-bottom:1px solid var(--bdr);padding-bottom:20px}
+.mh-name{font-size:24px;font-weight:bold;margin-bottom:4px}
+.mh-drug{font-size:15px;color:var(--t2)}
+.mh-badges{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.mb{padding:28px}
+.ms{margin-bottom:24px}.ms:last-child{margin-bottom:0}
+.ms-title{font-size:13px;text-transform:uppercase;letter-spacing:2px;font-weight:bold;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.ms-title .dot{width:10px;height:10px;border-radius:3px}
+.ms-body{font-size:16px;color:var(--t2);line-height:1.8}.ms-body strong{color:var(--t1)}
+.rf-box{background:rgba(213,43,30,.08);border:1px solid rgba(213,43,30,.2);border-radius:8px;padding:14px 16px;margin-top:10px}
+.rf-box p{font-size:15px;color:#f8a0a0;line-height:1.7}.rf-box strong{color:#f87171}
+.pos-box{background:rgba(74,222,128,.06);border:1px solid rgba(74,222,128,.15);border-radius:8px;padding:14px 16px;margin-top:10px}
+.pos-box p{font-size:15px;color:var(--teal);line-height:1.7}
+.footer{border-top:1px solid var(--bdr);padding:24px 0;text-align:center;font-size:13px;color:var(--t3)}
+::-webkit-scrollbar{width:6px;height:6px}::-webkit-scrollbar-track{background:var(--dk)}::-webkit-scrollbar-thumb{background:var(--s3);border-radius:3px}
+</style>
+</head>
+<body>
+<div class="modal-overlay" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal"><button class="modal-close" onclick="closeModal()">✕</button><div id="mc"></div></div>
+</div>
+
+<div class="hero"><div class="ctr"><div class="hrow">
+  <div><h1><span class="br">Eli Lilly</span> <span data-i="h1">Research Pipeline</span></h1><div class="sub" data-i="hsub">Interactive Drug Development Tracker · NYSE: LLY · Q4 2025 Earnings · Pipeline as of Feb 3, 2026</div></div>
+  <div class="ctrls"><input class="sb" id="si" data-i="search_ph" oninput="rp()"><div class="ltog"><button class="lb act" onclick="sL('en',this)">EN</button><button class="lb" onclick="sL('tc',this)">繁中</button></div></div>
+</div></div></div>
+
+<div class="ctr">
+<div class="ks">
+  <div class="kt" data-i="kpi_t">FY2025 Revenue by Product (USD)</div>
+  <div class="kg">
+    <div class="kc" data-c="r"><div class="kl">Mounjaro</div><div class="kv">$23.0B</div><div class="kd" data-i="mj_d">T2D · GIP/GLP-1</div><div class="kgr">▲ 94% YoY</div></div>
+    <div class="kc" data-c="p"><div class="kl">Zepbound</div><div class="kv">$13.5B</div><div class="kd" data-i="zb_d">Obesity · Tirzepatide</div><div class="kgr">▲ 285% YoY</div></div>
+    <div class="kc" data-c="b"><div class="kl">Verzenio</div><div class="kv">$5.7B</div><div class="kd" data-i="vz_d">Breast Cancer · CDK4/6</div><div class="kgr">▲ 8% YoY</div></div>
+    <div class="kc" data-c="t"><div class="kl">Jardiance</div><div class="kv">$3.2B</div><div class="kd">T2D/HF · SGLT2</div><div class="kgr">▲ 15% YoY</div></div>
+    <div class="kc" data-c="u"><div class="kl">Taltz</div><div class="kv">$3.5B</div><div class="kd" data-i="tl_d">Psoriasis · IL-17A</div><div class="kgr">▲ 18% YoY</div></div>
+    <div class="kc" data-c="o"><div class="kl" data-i="oth_l">Other Key Products</div><div class="kv">$16.3B</div><div class="kd">Trulicity, Humalog, Ebglyss, Omvoh, Kisunla, Jaypirca, Inluriyo</div><div class="kgr">▲ 12%</div></div>
+    <div class="kc" data-c="g"><div class="kl" data-i="tot_l">Total Revenue</div><div class="kv" style="color:var(--gold)">$65.2B</div><div class="kd">FY2025 · +45% YoY</div><div class="kgr" style="color:var(--gold)">2026E: $80–83B</div></div>
+  </div>
+  <div class="gs">
+    <div class="gi"><div class="gl" data-i="g26">2026 Guidance (Non-GAAP)</div></div>
+    <div class="gi"><div class="gl" data-i="gR">Revenue</div><div class="gv">$80–83B</div><div class="gss" data-i="gRs">+25% midpoint</div></div>
+    <div class="gi"><div class="gl">EPS</div><div class="gv">$33.50–35.00</div><div class="gss" data-i="gEs">+42% midpoint</div></div>
+    <div class="gi"><div class="gl" data-i="gPM">Perf. Margin</div><div class="gv">46–47.5%</div></div>
+    <div class="gi"><div class="gl" data-i="gO">Orforglipron US</div><div class="gv" style="color:var(--gold)">Q2 2026</div><div class="gss" data-i="gOs">Pending FDA approval</div></div>
+  </div>
+</div>
+
+<div class="sec">
+  <div class="st" data-i="fda_t">FDA Approval Timeline — Near-Term Catalysts</div>
+  <div class="tls"><div class="tlt"><div class="tll"></div>
+    <div class="tli"><div class="tld past"></div><div class="tln">Inluriyo</div><div class="tldt">Oct 2025</div><div class="tldc" data-i="tl1">ER+/HER2− mBC</div></div>
+    <div class="tli"><div class="tld past"></div><div class="tln">Jaypirca</div><div class="tldt">Q4 2025</div><div class="tldc" data-i="tl2">Full approval + CLL/SLL</div></div>
+    <div class="tli"><div class="tld now"></div><div class="tln" style="color:var(--gold)">Orforglipron</div><div class="tldt">Apr 10, 2026</div><div class="tldc" data-i="tl3">PDUFA obesity · Priority Review</div></div>
+    <div class="tli"><div class="tld fut"></div><div class="tln">Efsitora Alfa</div><div class="tldt">2026</div><div class="tldc" data-i="tl4">Weekly insulin T2D</div></div>
+    <div class="tli"><div class="tld fut"></div><div class="tln">Pirtobrutinib 1L</div><div class="tldt">2026</div><div class="tldc" data-i="tl5">1L CLL filed US/EU</div></div>
+    <div class="tli"><div class="tld fut"></div><div class="tln">Tirzepatide CV</div><div class="tldt">2026</div><div class="tldc" data-i="tl6">SURPASS-CVOT filed US</div></div>
+    <div class="tli"><div class="tld fut"></div><div class="tln">Retatrutide</div><div class="tldt" data-i="tl7d">Late 2026</div><div class="tldc" data-i="tl7">NDA post TRIUMPH 1/2/3</div></div>
+  </div></div>
+</div>
+
+<div class="sec" id="pipeSection">
+  <div class="sticky-bar" id="stickyBar">
+    <div class="sh">
+      <div class="st" data-i="pip_t">Drug Development Pipeline</div>
+      <button class="exp-all-btn" id="expAllBtn" onclick="toggleAll()">⊞ <span data-i="expAll">Expand All</span></button>
+    </div>
+    <div class="filter-row">
+      <span class="filter-label" data-i="flTA">Therapeutic Area:</span>
+      <div class="pills" id="pillBox"></div>
+    </div>
+    <div class="filter-row">
+      <span class="filter-label" data-i="flPH">Phase:</span>
+      <div id="phPills"></div>
+    </div>
+    <div class="filter-row">
+      <span class="filter-label" data-i="flST">Trial Status:</span>
+      <div id="stPills"></div>
+    </div>
+  </div>
+  <div class="ps">
+    <div class="psc rv"><div class="pn">6</div><div class="pl" data-i="ps1">Reg Review / Filed</div></div>
+    <div class="psc p3"><div class="pn">36</div><div class="pl" data-i="ps2">Phase 3 Programs</div></div>
+    <div class="psc p2"><div class="pn">25+</div><div class="pl" data-i="ps3">Phase 1/2</div></div>
+    <div class="psc ap"><div class="pn">34</div><div class="pl" data-i="ps4">Discovery</div></div>
+  </div>
+  <div id="dotLeg" style="font-size:14px;color:var(--t3);margin-bottom:14px;display:flex;gap:16px;align-items:center;flex-wrap:wrap"></div>
+  <div class="pg" id="pg"></div>
+</div>
+<div class="footer" data-i="footer">Disclaimer: For informational purposes only — not investment advice. Source: Eli Lilly Q4 2025 Earnings (Feb 3, 2026), SEC filings, investor.lilly.com press releases, NEJM, Lancet, clinicaltrials.gov.</div>
+</div>
+
+<script>
+let lang='en',tf='all',phF='all',stF='all',allExpanded=false;
+
+// Sticky bar scroll detection
+window.addEventListener('scroll',()=>{
+  const bar=document.getElementById('stickyBar');
+  if(bar)bar.classList.toggle('scrolled',window.scrollY>400);
+});
+
+// Static translations
+const T={en:{
+h1:'Research Pipeline',hsub:'Interactive Drug Development Tracker · NYSE: LLY · Q4 2025 Earnings · Pipeline as of Feb 3, 2026',search_ph:'Search drug or indication...',
+kpi_t:'FY2025 REVENUE BY PRODUCT (USD)',mj_d:'T2D · GIP/GLP-1',zb_d:'Obesity · Tirzepatide',vz_d:'Breast Cancer · CDK4/6',tl_d:'Psoriasis · IL-17A',oth_l:'Other Key Products',tot_l:'Total Revenue',
+g26:'2026 Guidance (Non-GAAP)',gR:'Revenue',gRs:'+25% midpoint',gEs:'+42% midpoint',gPM:'Perf. Margin',gO:'Orforglipron US',gOs:'Pending FDA approval',
+fda_t:'FDA Approval Timeline — Near-Term Catalysts',pip_t:'Drug Development Pipeline',
+tl1:'ER+/HER2− mBC',tl2:'Full approval + CLL/SLL',tl3:'PDUFA obesity · Priority Review',tl4:'Weekly insulin T2D',tl5:'1L CLL filed US/EU',tl6:'SURPASS-CVOT filed US',tl7:'NDA post TRIUMPH 1/2/3',tl7d:'Late 2026',
+ps1:'Reg Review / Filed',ps2:'Phase 3 Programs',ps3:'Phase 1/2',ps4:'Discovery',
+fAll:'All',fCM:'Cardiometabolic',fON:'Oncology',fIM:'Immunology',fNS:'Neuroscience',
+dotLeg:'Trial Status:',dotS:'Positive',dotA:'Active',dotP:'Planned',dotClick:'Click any trial row for full details',
+indLabel:'indication(s)',tabI:'Indications & Trials',tabM:'Mechanism',tabR:'Revenue / Impact',
+clickHint:'▸ Click for full trial details: hypothesis, statistics, red flags',
+mHyp:'HYPOTHESIS / PRIMARY ENDPOINT',mRes:'RESULTS',mStat:'TRIAL STATISTICS',mRisk:'RED FLAGS / RISKS',
+stPos:'✓ Positive Result',stAct:'● Active / Ongoing',stPlan:'○ Planned / Enrolling',
+stPosS:'✓ Positive',stActS:'● Active',stPlanS:'○ Planned',
+flTA:'Therapeutic Area:',flPH:'Phase:',flST:'Trial Status:',
+phAll:'All',phAppr:'Approved',phRev:'Reg Review',phP3:'Phase 3',phP2:'Phase 2',phP1:'Phase 1',
+stAll:'All',stS:'Positive',stA:'Active',stP:'Planned',
+expAll:'Expand All',colAll:'Collapse All',
+emptyTitle:'No drugs match this criteria',emptySub:'Try adjusting your filters or search keywords',
+footer:'Disclaimer: For informational purposes only — not investment advice. Source: Eli Lilly Q4 2025 Earnings (Feb 3, 2026), SEC filings, investor.lilly.com, NEJM, Lancet, clinicaltrials.gov.'
+},tc:{
+h1:'研究管線總覽',hsub:'互動式藥物開發追蹤器 · NYSE: LLY · Q4 2025財報 · 管線截至2026年2月3日',search_ph:'搜索藥物或適應症...',
+kpi_t:'FY2025各產品收入（美元）',mj_d:'二型糖尿病 · GIP/GLP-1',zb_d:'肥胖症 · 替爾泊肽',vz_d:'乳腺癌 · CDK4/6',tl_d:'銀屑病 · IL-17A',oth_l:'其他主要產品',tot_l:'總收入',
+g26:'2026年指引（Non-GAAP）',gR:'收入',gRs:'+25%中值',gEs:'+42%中值',gPM:'績效利潤率',gO:'Orforglipron 美國',gOs:'待FDA批准',
+fda_t:'FDA審批時間線 — 近期催化劑',pip_t:'藥物開發管線',
+tl1:'ER+/HER2−轉移性乳腺癌',tl2:'完全批准+CLL/SLL擴展',tl3:'PDUFA肥胖症·優先審查',tl4:'每週胰島素T2D',tl5:'1L CLL已提交美/歐',tl6:'SURPASS-CVOT已提交美國',tl7:'TRIUMPH 1/2/3後提交NDA',tl7d:'2026年底',
+ps1:'審查中/已提交',ps2:'三期臨床項目',ps3:'一/二期',ps4:'探索階段',
+fAll:'全部',fCM:'心血管代謝',fON:'腫瘤學',fIM:'免疫學',fNS:'神經科學',
+dotLeg:'試驗狀態：',dotS:'正面',dotA:'進行中',dotP:'計劃中',dotClick:'點擊任意試驗行查看詳情',
+indLabel:'項適應症/試驗',tabI:'適應症與試驗',tabM:'作用機制',tabR:'收入/影響',
+clickHint:'▸ 點擊查看完整試驗詳情：假設、統計、風險警示',
+mHyp:'假設 / 主要終點',mRes:'結果',mStat:'試驗統計',mRisk:'風險警示 / 紅旗',
+stPos:'✓ 正面結果',stAct:'● 進行中',stPlan:'○ 計劃中/入組中',
+stPosS:'✓ 正面',stActS:'● 進行中',stPlanS:'○ 計劃中',
+flTA:'治療領域：',flPH:'階段：',flST:'試驗狀態：',
+phAll:'全部',phAppr:'已獲批',phRev:'審查中',phP3:'第三期',phP2:'第二期',phP1:'第一期',
+stAll:'全部',stS:'正面',stA:'進行中',stP:'計劃中',
+expAll:'展開全部',colAll:'收合全部',
+emptyTitle:'找不到符合此條件的藥物',emptySub:'請嘗試調整篩選條件或搜索關鍵字',
+footer:'免責聲明：僅供參考，不構成投資建議。來源：禮來Q4 2025財報（2026年2月3日）、SEC文件、investor.lilly.com新聞稿、NEJM、Lancet、clinicaltrials.gov。'
+}};
+
+// Bilingual helper
+function tx(en,tc){return lang==='tc'?tc:en}
+function phTx(p){if(lang==='en')return p;const m={'Phase 3':'第三期','Phase 3b':'第三b期','Phase 2':'第二期','Phase 2/3':'第二/三期','Phase 1':'第一期','Phase 1b':'第1b期','Phase 1/2':'第一/二期','Filed':'已提交','Filed US':'已提交美國','Filed US/EU/JP':'已提交美/歐/日','Approved':'已獲批','Approved ✓':'已獲批 ✓','Reg Review':'審查中'};return m[p]||p}
+
+// Drug data - all strings bilingual via tx() at render time
+const D=[
+{id:'orf',nm:'Orforglipron',gn:'LY3502970 · Oral GLP-1 RA',ta:'cm',ph:'review',
+ pl:()=>tx('NDA Filed','已提交NDA'),tal:()=>tx('Cardiometabolic','心血管代謝'),
+ mech:()=>tx('Once-daily oral non-peptide GLP-1 receptor agonist. Can be taken any time of day without food/water restrictions. Small molecule — enables large-scale oral manufacturing. Discovered by Chugai, licensed to Lilly 2018.','每日一次口服非肽類GLP-1受體激動劑。可在一天中任何時間服用，無食物/飲水限制。小分子——可大規模口服製造。由中外製藥發現，2018年授權予禮來。'),
+ rev:()=>tx('Analysts: ~$13.6B peak sales by 2030 (60% oral GLP-1 market). $149/mo via LillyDirect. PDUFA Apr 10, 2026. Q2 2026 US launch. Medicare access Jul 2026. Submitted 40+ countries.','分析師：2030年峰值~136億美元（口服GLP-1市場60%）。LillyDirect每月149美元。PDUFA 2026年4月10日。Q2 2026美國上市。Medicare 2026年7月。已在40+國家提交。'),
+ inds:[
+  {n:'ATTAIN-1 — Obesity',ph:'Phase 3',st:'s',dt:'Aug 2025',
+   brief:()=>tx('<strong>12.4% wt loss</strong> at 36mg/72wk. Published NEJM. n=3,127.','<strong>12.4%體重減輕</strong>（36mg/72週）。NEJM發表。n=3,127。'),
+   hyp:()=>tx('Test whether orforglipron 6mg, 12mg, 36mg produces superior body weight reduction vs placebo at 72 weeks in adults with obesity/overweight without diabetes.','測試orforglipron 6mg、12mg、36mg在無糖尿病的肥胖/超重成人中72週時是否產生優於安慰劑的體重減輕。'),
+   res:()=>tx('36mg: −12.4% body weight (−27.3 lbs) vs −2.1% placebo. 59.6% lost ≥10%, 39.6% lost ≥15%. 91% of prediabetic patients achieved near-normal blood sugar. Improvements in non-HDL cholesterol, systolic BP, triglycerides. hsCRP reduced at highest dose.','36mg：體重−12.4%（−27.3磅）vs 安慰劑−2.1%。59.6%減≥10%，39.6%減≥15%。91%糖尿病前期患者血糖恢復接近正常。non-HDL膽固醇、收縮壓、三酸甘油酯改善。最高劑量hsCRP降低。'),
+   stats:()=>tx('n=3,127 | 72 weeks | Efficacy estimand | Published NEJM Sep 16, 2025 | Presented EASD 2025','n=3,127 | 72週 | 療效估計 | 2025年9月16日NEJM發表 | 2025年EASD報告'),
+   risk:()=>tx('Nausea 33.7% (36mg) vs 10.4% placebo. Vomiting 24.0% vs 3.5%. Discontinuation due to AEs: 10.3% (36mg) vs 2.6% placebo. No hepatic signal. <strong>Weight loss lower than injectables</strong> (~12% vs ~20%+ for Zepbound) — raises competitiveness questions, but oral convenience may offset for many patients.','噁心33.7%（36mg）vs安慰劑10.4%。嘔吐24.0% vs 3.5%。因AE停藥：10.3%（36mg）vs 2.6%安慰劑。無肝臟信號。<strong>減重低於注射型</strong>（~12% vs Zepbound ~20%+）——引發競爭力質疑，但口服便利性可能對許多患者有抵消作用。')},
+  {n:'ATTAIN-2 — Obesity+T2D',ph:'Phase 3',st:'s',dt:'Aug 2025',
+   brief:()=>tx('<strong>10.5% wt loss</strong>, A1C −1.8% at 36mg/72wk. n=1,613.','<strong>10.5%減重</strong>，A1C −1.8%（36mg/72週）。n=1,613。'),
+   hyp:()=>tx('Evaluate orforglipron in adults with obesity AND type 2 diabetes — a harder-to-treat population.','評估orforglipron在肥胖合併二型糖尿病成人中的效果——較難治療的人群。'),
+   res:()=>tx('36mg: −10.5% (−22.9 lbs) vs −2.2% placebo. A1C −1.8%. 50% achieved ≥10% wt loss. 75.5% achieved A1C <7% vs 30.5% placebo. Published Lancet Nov 2025.','36mg：−10.5%（−22.9磅）vs安慰劑−2.2%。A1C −1.8%。50%達≥10%減重。75.5%達A1C <7% vs安慰劑30.5%。2025年11月Lancet發表。'),
+   stats:()=>tx('n=1,613 | 72 weeks | Efficacy estimand | Published Lancet Nov 2025 | Presented ObesityWeek 2025','n=1,613 | 72週 | 療效估計 | 2025年11月Lancet發表 | 2025年ObesityWeek報告'),
+   risk:()=>tx('Lower weight loss vs non-diabetic (10.5% vs 12.4%) — expected given T2D pathophysiology. Nausea 36.4% (36mg) vs 8.4% placebo. Disc. due to AEs 10.6% vs 4.6%.','減重低於非糖尿病人群（10.5% vs 12.4%）——符合T2D病理生理預期。噁心36.4%（36mg）vs安慰劑8.4%。因AE停藥10.6% vs 4.6%。')},
+  {n:'ATTAIN-MAINTAIN',ph:'Phase 3',st:'s',dt:'Dec 2025',
+   brief:()=>tx('Maintained weight from injectables. Wegovy→orf: only <strong>+0.9 kg</strong> regain at 52wk.','從注射型維持體重。Wegovy→orf：52週僅<strong>+0.9 kg</strong>回彈。'),
+   hyp:()=>tx('First trial testing whether oral GLP-1 can maintain weight loss achieved with injectable therapy (Wegovy/Zepbound) — addressing critical unmet need of weight regain.','首項測試口服GLP-1能否維持注射治療（Wegovy/Zepbound）所達減重的試驗——解決體重回彈的關鍵未滿足需求。'),
+   res:()=>tx('Wegovy→orforglipron: +0.9 kg at 52wk. At 24wk (pre-rescue): −0.1 kg vs +9.4 kg placebo. Zepbound→orforglipron: +5.0 kg at 52wk. Both groups ended at 95.9 kg avg.','Wegovy→orforglipron：52週+0.9 kg。24週（救援前）：−0.1 kg vs安慰劑+9.4 kg。Zepbound→orforglipron：52週+5.0 kg。兩組最終均為95.9 kg。'),
+   stats:()=>tx('From SURMOUNT-5 participants | 52 weeks | Efficacy estimand | Pre-specified + post-hoc 24wk','來自SURMOUNT-5參與者 | 52週 | 療效估計 | 預設+事後24週分析'),
+   risk:()=>tx('Zepbound→orf showed 5.0 kg regain — less effective at maintaining deeper tirzepatide-induced weight loss. Suggests orf maintenance more suited for semaglutide-class step-down than tirzepatide step-down.','Zepbound→orf顯示5.0 kg回彈——維持替爾泊肽深度減重的效果較差。提示orf維持更適合從semaglutide類藥物降級，而非從替爾泊肽降級。')},
+  {n:'ACHIEVE-3 — T2D vs Oral Semaglutide H2H',ph:'Phase 3',st:'s',dt:'Sep 2025',
+   brief:()=>tx('<strong>Superior to oral semaglutide</strong>: A1C −2.2% vs −1.7%.','<strong>優於口服索馬魯肽</strong>：A1C −2.2% vs −1.7%。'),
+   hyp:()=>tx('Head-to-head: orforglipron 36mg vs oral semaglutide 14mg in T2D on metformin.','頭對頭：orforglipron 36mg vs口服semaglutide 14mg，T2D+二甲雙胍。'),
+   res:()=>tx('A1C: −2.2% vs −1.7%. Nearly 3× reached near-normal A1C. Wt: −9.2% vs −6.7%. Published Lancet Feb 2026.','A1C：−2.2% vs −1.7%。近3倍達接近正常A1C。減重：−9.2% vs −6.7%。2026年2月Lancet發表。'),
+   stats:()=>tx('Open-label | 52 weeks | Published Lancet Feb 2026 | ADA Jun 2026','開放標籤 | 52週 | 2026年2月Lancet發表 | ADA 2026年6月'),
+   risk:()=>tx('<strong>Open-label design</strong> (not blinded) is a limitation. Semaglutide capped at 14mg — Novo\'s oral semaglutide 25mg (Wegovy pill, approved Dec 2025) showed 16.6% wt loss and was NOT the comparator.','<strong>開放標籤設計</strong>（非盲法）是局限。Semaglutide上限14mg——Novo的口服semaglutide 25mg（Wegovy口服，2025年12月獲批）顯示16.6%減重，並非此試驗的對照藥。')},
+  {n:'ACHIEVE-4 — T2D CV Outcomes',ph:'Phase 3',st:'a',dt:'Mar 2026',
+   brief:()=>tx('MACE-4 vs insulin glargine. n=2,749. <strong>Imminent readout</strong>.','MACE-4 vs甘精胰島素。n=2,749。<strong>即將出結果</strong>。'),
+   hyp:()=>tx('CV safety/benefit of orforglipron vs insulin glargine in T2D at increased CV risk. MACE-4 composite.','orforglipron vs甘精胰島素在高CV風險T2D中的CV安全性/獲益。MACE-4複合終點。'),
+   res:()=>tx('Primary completion March 2026 — readout imminent. Key remaining trial for T2D filing.','主要完成2026年3月——即將出結果。T2D申報的關鍵剩餘試驗。'),
+   stats:()=>tx('n=2,749 | Event-driven | Primary completion Mar 2026','n=2,749 | 事件驅動 | 主要完成2026年3月'),
+   risk:()=>tx('If CV outcomes are neutral (non-inferiority only), still supports T2D filing but won\'t generate "cardioprotective" label. Negative signal would be highly damaging.','如果CV結局為中性（僅非劣效），仍支持T2D申報但不會獲得「心臟保護」標籤。負面信號將造成嚴重損害。')},
+  {n:'ACHIEVE-1 — T2D Monotherapy',ph:'Phase 3',st:'s',dt:'Apr 2025',
+   brief:()=>tx('<strong>A1C −1.9%</strong> at 36mg. Superior vs placebo. Published NEJM Jun 2025. n=1,290.','<strong>A1C −1.9%</strong>（36mg）。優於安慰劑。2025年6月NEJM發表。n=1,290。'),
+   hyp:()=>tx('HbA1c reduction in T2D inadequately controlled with diet and exercise alone.','僅靠飲食和運動控制不佳的T2D中的HbA1c降低。'),
+   res:()=>tx('36mg: A1C −1.9%. Superior glycemic control vs placebo. Published NEJM Jun 2025.','36mg：A1C −1.9%。優於安慰劑的血糖控制。2025年6月NEJM發表。'),
+   stats:()=>tx('n=1,290 | Published NEJM Jun 2025 | Presented ADA 2025','n=1,290 | 2025年6月NEJM發表 | ADA 2025報告'),
+   risk:()=>tx('Placebo-controlled only. Real-world differentiation vs established T2D drugs needs H2H data (ACHIEVE-3).','僅安慰劑對照。vs已有T2D藥物的真實世界差異化需要H2H數據（ACHIEVE-3）。')},
+  {n:'ACHIEVE-2 — T2D vs Dapagliflozin',ph:'Phase 3',st:'s',dt:'Oct 2025',
+   brief:()=>tx('Superior to Farxiga (SGLT2i) on glycemic and weight endpoints.','在血糖和體重終點上優於Farxiga（SGLT2i）。'),
+   hyp:()=>tx('Orforglipron vs dapagliflozin (SGLT2 inhibitor) in T2D inadequately controlled on metformin.','二甲雙胍控制不佳的T2D中orforglipron vs達格列淨（SGLT2抑制劑）。'),
+   res:()=>tx('Superior to Farxiga on glycemic and weight endpoints.','在血糖和體重終點上優於Farxiga。'),
+   stats:()=>tx('Topline Oct 2025','頂線結果2025年10月'),
+   risk:()=>tx('SGLT2i comparator is less competitive than semaglutide H2H (ACHIEVE-3).','SGLT2i對照藥競爭力不如semaglutide H2H（ACHIEVE-3）。')},
+  {n:'ACHIEVE-5 — T2D + Insulin',ph:'Phase 3',st:'s',dt:'2025',
+   brief:()=>tx('Positive in patients on insulin glargine ± metformin/SGLT2i.','在甘精胰島素±二甲雙胍/SGLT2i患者中正面。'),
+   hyp:()=>tx('Orforglipron in T2D unable to achieve glycemic control with insulin glargine ± oral agents.','在甘精胰島素±口服藥物控制不佳的T2D中orforglipron的療效。'),
+   res:()=>tx('Positive. Met primary endpoint.','正面。達到主要終點。'),
+   stats:()=>tx('2025','2025年'),
+   risk:()=>tx('Add-on to insulin is a later-line setting. Important for comprehensive T2D filing.','加用胰島素是較晚線治療。對全面T2D申報很重要。')},
+  {n:'OSA — ATTAIN-OSA',ph:'Phase 3',st:'a',dt:'Nov 2026',
+   brief:()=>tx('Apnea-hypopnea index change. n=600.','呼吸暫停低通氣指數變化。n=600。'),
+   hyp:()=>tx('Change from baseline in AHI in adults with obstructive sleep apnea and obesity/overweight.','肥胖/超重合併阻塞性睡眠呼吸暫停成人中AHI的基線變化。'),
+   res:()=>tx('Ongoing.','進行中。'),
+   stats:()=>tx('n=600 | AHI | Nov 2026','n=600 | AHI | 2026年11月'),
+   risk:()=>tx('Must show meaningful AHI reduction to compete with Zepbound\'s established OSA indication.','必須展示有意義的AHI降低以與Zepbound已有的OSA適應症競爭。')},
+  {n:'OA Knee Pain — ATTAIN-OA PAIN',ph:'Phase 3',st:'a',dt:'Apr 2028',
+   brief:()=>tx('WOMAC pain score. n=800.','WOMAC疼痛評分。n=800。'),
+   hyp:()=>tx('WOMAC pain subscale change in obesity + knee OA.','肥胖+膝OA中WOMAC疼痛分量表變化。'),
+   res:()=>tx('Ongoing.','進行中。'),
+   stats:()=>tx('n=800 | WOMAC | Apr 2028','n=800 | WOMAC | 2028年4月'),
+   risk:()=>tx('Retatrutide showed 75.8% pain reduction in TRIUMPH-4. Orforglipron\'s lower weight loss (~12% vs ~28%) may translate to less pain benefit.','Retatrutide在TRIUMPH-4中顯示75.8%疼痛減輕。Orforglipron較低減重（~12% vs ~28%）可能轉化為較少的疼痛獲益。')},
+  {n:'Hypertension — ATTAIN-HTN',ph:'Phase 3',st:'a',dt:'Sep 2027',
+   brief:()=>tx('Systolic BP change. n=974.','收縮壓變化。n=974。'),
+   hyp:()=>tx('Change from baseline in systolic blood pressure in hypertension + obesity/overweight.','高血壓+肥胖/超重中收縮壓的基線變化。'),
+   res:()=>tx('Ongoing.','進行中。'),
+   stats:()=>tx('n=974 | SBP | Sep 2027','n=974 | SBP | 2027年9月'),
+   risk:()=>tx('Expanding TAM into hypertension. Clinical bar is modest but addresses large population.','將TAM擴展至高血壓。臨床門檻適中但針對大量人群。')},
+  {n:'Stress Urinary Incontinence — RESTRAIN-SUI',ph:'Phase 3',st:'a',dt:'Mar 2028',
+   brief:()=>tx('IEF change in women with obesity. n=1,000.','肥胖女性IEF變化。n=1,000。'),
+   hyp:()=>tx('Change from baseline in incontinence episode frequency in female participants with SUI and obesity/overweight.','SUI+肥胖/超重女性參與者中尿失禁發作頻率的基線變化。'),
+   res:()=>tx('Ongoing.','進行中。'),
+   stats:()=>tx('n=1,000 | IEF | Mar 2028','n=1,000 | IEF | 2028年3月'),
+   risk:()=>tx('Novel indication for GLP-1. Must demonstrate clinically meaningful incontinence improvement beyond weight loss alone.','GLP-1的新適應症。必須展示超越單純減重的臨床有意義的尿失禁改善。')},
+  {n:'CV Outcomes — ATTAIN-Outcomes',ph:'Phase 3',st:'p',dt:'Aug 2031',
+   brief:()=>tx('MACE composite in ASCVD/CKD. n=7,140.','ASCVD/CKD的MACE複合終點。n=7,140。'),
+   hyp:()=>tx('Time to first MACE composite in adults with ASCVD and/or CKD.','ASCVD和/或CKD成人中首次MACE複合終點的時間。'),
+   res:()=>tx('Enrolling.','入組中。'),
+   stats:()=>tx('n=7,140 | MACE | Aug 2031','n=7,140 | MACE | 2031年8月'),
+   risk:()=>tx('Very long timeline. Won\'t impact near-term thesis. But necessary for long-term CV label.','時間線很長。不影響近期投資邏輯。但對長期CV標籤有必要。')},
+  {n:'PAD — ATTAIN-PAD',ph:'Phase 3',st:'a',dt:'Jun 2028',
+   brief:()=>tx('Max walking distance. n=1,205.','最大步行距離。n=1,205。'),
+   hyp:()=>tx('Percent change from baseline in maximum walking distance in peripheral artery disease.','外周動脈疾病中最大步行距離的基線百分比變化。'),
+   res:()=>tx('Ongoing.','進行中。'),
+   stats:()=>tx('n=1,205 | Walking distance | Jun 2028','n=1,205 | 步行距離 | 2028年6月'),
+   risk:()=>tx('PAD is a novel indication for GLP-1 class. Must show functional improvement beyond weight loss.','PAD是GLP-1類的新適應症。必須展示超越減重的功能改善。')},
+]},
+{id:'ret',nm:'Retatrutide',gn:'LY3437943 · GIP/GLP-1/Glucagon Triple Agonist',ta:'cm',ph:'p3',
+ pl:()=>tx('Phase 3','第三期'),tal:()=>tx('Cardiometabolic','心血管代謝'),
+ mech:()=>tx('First-in-class once-weekly SC triple hormone receptor agonist (GIP+GLP-1+glucagon). Glucagon signal increases energy expenditure and lipolysis, driving superior weight loss. 10+ TRIUMPH and TRANSCEND trials.','首創每週一次SC三重激素受體激動劑（GIP+GLP-1+升糖素）。升糖素信號增加能量消耗和脂肪分解，驅動超強減重。10+項TRIUMPH和TRANSCEND試驗。'),
+ rev:()=>tx('GlobalData: $15.6B peak sales 2031. NDA late 2026. Approval ~2027. Citi: TRIUMPH-1 may show >30% wt loss.','GlobalData：2031年峰值156億美元。NDA 2026年底。獲批~2027年。Citi：TRIUMPH-1可能>30%減重。'),
+ inds:[
+  {n:'TRIUMPH-4 — OA+Obesity',ph:'Phase 3',st:'s',dt:'Dec 2025',
+   brief:()=>tx('<strong>28.7% wt loss</strong>, WOMAC pain <strong>−75.8%</strong>. n=445.','<strong>28.7%減重</strong>，WOMAC疼痛<strong>−75.8%</strong>。n=445。'),
+   hyp:()=>tx('Co-primary: superior body weight reduction AND WOMAC pain reduction vs placebo in obesity+knee OA without diabetes.','共同主要終點：在無糖尿病的肥胖+膝OA中體重減輕和WOMAC疼痛減輕優於安慰劑。'),
+   res:()=>tx('12mg: −28.7% (−71.2 lbs). 9mg: −26.4%. WOMAC pain: −75.8% (12mg) vs −40.3% placebo. 12-14% completely pain-free. SBP −14.0 mmHg. Reduced non-HDL, triglycerides, hsCRP.','12mg：−28.7%（−71.2磅）。9mg：−26.4%。WOMAC疼痛：−75.8%（12mg）vs安慰劑−40.3%。12-14%完全無痛。SBP −14.0 mmHg。降低non-HDL、三酸甘油酯、hsCRP。'),
+   stats:()=>tx('n=445 | 1:1:1 | 68 weeks | BMO: placebo-adj 26.6%','n=445 | 1:1:1 | 68週 | BMO：安慰劑校正26.6%'),
+   risk:()=>tx('<strong>Dysesthesia signal</strong>: 20.9% at 12mg, 8.8% at 9mg vs 0.7% placebo — not seen in Phase 2 or other incretins. BMO flagged. Disc: 18.2% (12mg) vs 4.0% placebo. Some due to "perceived excessive weight loss" in lower-BMI. Nausea 43%, vomiting 21%.','<strong>觸覺異常信號</strong>：12mg時20.9%，9mg時8.8% vs安慰劑0.7%——二期或其他腸促胰素中未見。BMO標記。停藥：18.2%（12mg）vs安慰劑4.0%。部分因低BMI患者「認為體重減輕過多」。噁心43%，嘔吐21%。')},
+  {n:'TRIUMPH-1 — Obesity (80wk)',ph:'Phase 3',st:'a',dt:'Apr 2026',
+   brief:()=>tx('n=2,300. <strong>80-week — may exceed 30%</strong> per Citi. Imminent.','n=2,300。<strong>80週——Citi預測可能>30%</strong>。即將到來。'),
+   hyp:()=>tx('Body weight % change at 80 weeks in adults with obesity/overweight. Pivotal registrational trial.','成人肥胖/超重80週體重百分比變化。關鍵註冊試驗。'),
+   res:()=>tx('Primary completion April 2026. Citi: >30% weight loss possible due to longer duration.','主要完成2026年4月。Citi：因更長時間可能>30%減重。'),
+   stats:()=>tx('n=2,300 | 80 weeks | Pivotal','n=2,300 | 80週 | 關鍵試驗'),
+   risk:()=>tx('If dysesthesia worsens at larger n, or >30% wt loss triggers muscle/bone mass concerns. Discontinuation rates critical.','如果觸覺異常在更大樣本中惡化，或>30%減重引發肌肉/骨量流失擔憂。停藥率關鍵。')},
+  {n:'TRIUMPH-2 — T2D+Obesity',ph:'Phase 3',st:'a',dt:'May 2026',
+   brief:()=>tx('n=1,000. Body weight in T2D + obesity/overweight.','n=1,000。T2D+肥胖/超重中的體重。'),
+   hyp:()=>tx('Body weight % change in adults with T2D and obesity/overweight.','T2D合併肥胖/超重成人的體重百分比變化。'),
+   res:()=>tx('Ongoing. Primary completion May 2026.','進行中。主要完成2026年5月。'),
+   stats:()=>tx('n=1,000 | May 2026','n=1,000 | 2026年5月'),
+   risk:()=>tx('T2D population typically shows lower weight loss. Need to demonstrate differentiation from tirzepatide.','T2D人群通常減重較少。需展示與替爾泊肽的差異化。')},
+  {n:'TRIUMPH-3 — Obesity+CVD',ph:'Phase 3',st:'a',dt:'Apr 2026',
+   brief:()=>tx('n=1,800. Obesity with cardiovascular disease.','n=1,800。合併心血管疾病的肥胖。'),
+   hyp:()=>tx('Body weight % change in adults with obesity and established CVD.','肥胖合併已確立CVD成人的體重百分比變化。'),
+   res:()=>tx('Ongoing. Primary completion Apr 2026.','進行中。主要完成2026年4月。'),
+   stats:()=>tx('n=1,800 | Apr 2026','n=1,800 | 2026年4月'),
+   risk:()=>tx('Safety profile in CVD patients is critical. Dysesthesia and CV effects will be closely monitored.','CVD患者中的安全性至關重要。觸覺異常和CV效應將被密切監測。')},
+  {n:'TRIUMPH-5 — vs Tirzepatide H2H',ph:'Phase 3',st:'a',dt:'Dec 2026',
+   brief:()=>tx('n=800. Direct comparison with Zepbound.','n=800。與Zepbound直接比較。'),
+   hyp:()=>tx('Head-to-head: retatrutide vs tirzepatide in adults with obesity.','頭對頭：retatrutide vs替爾泊肽在肥胖成人中。'),
+   res:()=>tx('Ongoing. Dec 2026 completion.','進行中。2026年12月完成。'),
+   stats:()=>tx('n=800 | Dec 2026','n=800 | 2026年12月'),
+   risk:()=>tx('If no clear superiority over Zepbound, hard to justify differentiated positioning. Higher side effects (dysesthesia, GI) could offset weight loss advantage.','如果不能明確優於Zepbound，難以證明差異化定位。更高副作用（觸覺異常、GI）可能抵消減重優勢。')},
+  {n:'TRANSCEND-T2D-1 — T2D Monotherapy',ph:'Phase 3',st:'s',dt:'Mar 19, 2026 ✓',
+   brief:()=>tx('<strong>A1C −2.0%</strong> (9mg), <strong>wt loss −16.8%</strong> (−36.6 lbs) at 12mg/40wk. No weight plateau. n=537. Released today.','<strong>A1C −2.0%</strong>（9mg），<strong>減重−16.8%</strong>（−36.6磅）12mg/40週。無減重平台期。n=537。今日發布。'),
+   hyp:()=>tx('Superior A1C reduction vs placebo at 40 weeks in treatment-naïve T2D adults (no prior diabetes meds ≥90 days, naïve to insulin) with inadequate glycemic control on diet/exercise alone. Baseline A1C 7.9%, BMI 35.8, mean diabetes duration 2.5 years.','在僅靠飲食/運動控制不佳的初治T2D成人中（≥90天無既往糖尿病用藥，胰島素初治）40週時A1C降低優於安慰劑。基線A1C 7.9%，BMI 35.8，平均糖尿病病程2.5年。'),
+   res:()=>tx('<strong>Met primary and all key secondary endpoints.</strong> A1C reduction (efficacy estimand): −1.7% (4mg), −2.0% (9mg), −1.9% (12mg) vs −0.8% placebo. Body weight loss (efficacy estimand): −11.5% / −24.5 lbs (4mg), −15.5% / −33.3 lbs (9mg), <strong>−16.8% / −36.6 lbs (12mg)</strong> vs −2.5% / −6.2 lbs placebo. No weight loss plateau observed — participants continued losing weight through 40 weeks. Clinically meaningful improvements in non-HDL cholesterol, triglycerides, and systolic blood pressure. To be presented at ADA Scientific Sessions Jun 2026.','<strong>達到主要及所有關鍵次要終點。</strong>A1C降低（療效估計）：−1.7%（4mg）、−2.0%（9mg）、−1.9%（12mg）vs安慰劑−0.8%。體重減輕（療效估計）：−11.5%/−24.5磅（4mg）、−15.5%/−33.3磅（9mg）、<strong>−16.8%/−36.6磅（12mg）</strong> vs安慰劑−2.5%/−6.2磅。未觀察到減重平台期——參與者在40週內持續減重。non-HDL膽固醇、三酸甘油酯和收縮壓有臨床意義的改善。將在2026年6月ADA科學會議上報告。'),
+   stats:()=>tx('n=537 | 1:1:1:1 randomization | 40 weeks | Double-blind, placebo-controlled | NCT06354660 | Efficacy + treatment-regimen estimands | Released Mar 19, 2026','n=537 | 1:1:1:1隨機 | 40週 | 雙盲安慰劑對照 | NCT06354660 | 療效+治療方案估計 | 2026年3月19日發布'),
+   risk:()=>tx('<strong>Dysesthesia signal persists but milder than TRIUMPH-4:</strong> 4.5% (4mg), 2.3% (9mg), 4.4% (12mg) vs 0% placebo — generally mild with majority resolving during treatment. Lower than TRIUMPH-4\'s 20.9% at 12mg, suggesting dose-independent and population-dependent variation. GI AEs: nausea 26.5% (12mg), diarrhea 22.8%, vomiting 17.6% — primarily during dose escalation. Discontinuation due to AEs: 5.1% (12mg) vs 0% placebo — markedly lower than TRIUMPH-4\'s 18.2%. 40-week trial duration is shorter than typical obesity trials (68-80wk). Treatment-naïve population (mean 2.5yr diabetes) may not represent broader real-world T2D patients on existing therapies.','<strong>觸覺異常信號持續但比TRIUMPH-4溫和：</strong>4.5%（4mg）、2.3%（9mg）、4.4%（12mg）vs安慰劑0%——普遍輕微，多數在治療期間消退。低於TRIUMPH-4的12mg時20.9%，提示劑量無關和人群依賴性變異。GI不良事件：噁心26.5%（12mg）、腹瀉22.8%、嘔吐17.6%——主要在劑量遞增期。因AE停藥：5.1%（12mg）vs安慰劑0%——明顯低於TRIUMPH-4的18.2%。40週試驗時間短於典型肥胖試驗（68-80週）。初治人群（平均2.5年糖尿病）可能不代表已在接受治療的更廣泛真實世界T2D患者。')},
+  {n:'TRANSCEND-T2D-2 — vs Semaglutide H2H',ph:'Phase 3',st:'a',dt:'Aug 2026',
+   brief:()=>tx('n=1,250. Retatrutide vs semaglutide in T2D on metformin ± SGLT2i. HbA1c endpoint.','n=1,250。T2D二甲雙胍±SGLT2i中retatrutide vs索馬魯肽。HbA1c終點。'),
+   hyp:()=>tx('HbA1c reduction of retatrutide vs semaglutide in T2D inadequately controlled with metformin ± SGLT2 inhibitor.','二甲雙胍±SGLT2抑制劑控制不佳的T2D中retatrutide vs索馬魯肽的HbA1c降低。'),
+   res:()=>tx('Ongoing. Primary completion Aug 2026.','進行中。主要完成2026年8月。'),
+   stats:()=>tx('n=1,250 | HbA1c | Aug 2026','n=1,250 | HbA1c | 2026年8月'),
+   risk:()=>tx('Head-to-head vs semaglutide is the critical competitive test. Must show clear superiority to justify differentiated positioning in T2D.','vs索馬魯肽的頭對頭比較是關鍵競爭測試。必須展示明確優越性以證明T2D中的差異化定位。')},
+  {n:'TRANSCEND-T2D-3 — Renal Impairment',ph:'Phase 3',st:'a',dt:'Oct 2026',
+   brief:()=>tx('n=320. T2D with moderate/severe renal impairment on basal insulin.','n=320。中/重度腎損害合併基礎胰島素的T2D。'),
+   hyp:()=>tx('HbA1c change in T2D patients with moderate or severe renal impairment on basal insulin ± metformin/SGLT2i.','中重度腎損害合併基礎胰島素±二甲雙胍/SGLT2i的T2D患者中HbA1c變化。'),
+   res:()=>tx('Ongoing. Primary completion Oct 2026.','進行中。主要完成2026年10月。'),
+   stats:()=>tx('n=320 | HbA1c | Oct 2026','n=320 | HbA1c | 2026年10月'),
+   risk:()=>tx('Renal impairment population adds safety complexity. Important for comprehensive T2D filing.','腎損害人群增加安全性複雜性。對全面T2D申報很重要。')},
+  {n:'TRIUMPH-6 — Maintenance',ph:'Phase 3',st:'a',dt:'Apr 2028',
+   brief:()=>tx('n=643. Weight maintenance after initial loss.','n=643。初始減重後的體重維持。'),
+   hyp:()=>tx('Body weight maintenance in individuals with obesity after initial weight reduction.','肥胖個體初始減重後的體重維持。'),
+   res:()=>tx('Ongoing.','進行中。'),
+   stats:()=>tx('n=643 | Apr 2028','n=643 | 2028年4月'),
+   risk:()=>tx('Must show durable maintenance. Orforglipron ATTAIN-MAINTAIN showed some regain from Zepbound switch.','必須展示持久維持。Orforglipron ATTAIN-MAINTAIN顯示從Zepbound轉換後有些回彈。')},
+  {n:'TRIUMPH-7 — Chronic Low Back Pain + Obesity',ph:'Phase 3',st:'a',dt:'Sep 2027',
+   brief:()=>tx('n=586. Body weight + pain intensity (NRS).','n=586。體重+疼痛強度（NRS）。'),
+   hyp:()=>tx('Co-primary: body weight change and pain intensity by numeric rating scale in obesity + chronic low back pain.','共同主要終點：肥胖+慢性腰痛中的體重變化和NRS疼痛強度。'),
+   res:()=>tx('Ongoing.','進行中。'),
+   stats:()=>tx('n=586 | Body weight + NRS pain | Sep 2027','n=586 | 體重+NRS疼痛 | 2027年9月'),
+   risk:()=>tx('CLBP is subjective and hard to demonstrate in RCTs. Dysesthesia signal from TRIUMPH-4 needs monitoring.','CLBP是主觀的，在RCT中難以展示。TRIUMPH-4的觸覺異常信號需監測。')},
+  {n:'TRIUMPH-OUTCOMES — CV/Renal Outcomes',ph:'Phase 3',st:'a',dt:'Feb 2029',
+   brief:()=>tx('n=10,000. Long-term MACE + renal composite.','n=10,000。長期MACE+腎臟複合終點。'),
+   hyp:()=>tx('Time to first occurrence of composite CV and kidney outcomes in adults with obesity.','肥胖成人中複合CV和腎臟結局首次發生的時間。'),
+   res:()=>tx('Enrolling.','入組中。'),
+   stats:()=>tx('n=10,000 | Composite MACE+renal | Feb 2029','n=10,000 | 複合MACE+腎臟 | 2029年2月'),
+   risk:()=>tx('Very long timeline. Essential for long-term label but won\'t impact near-term thesis.','時間線很長。對長期標籤至關重要但不影響近期投資邏輯。')},
+  {n:'MASLD — SYNERGY-Outcomes',ph:'Phase 3',st:'a',dt:'Aug 2030',
+   brief:()=>tx('Master protocol with tirzepatide. n=4,500. Liver outcomes.','與替爾泊肽主方案。n=4,500。肝臟結局。'),
+   hyp:()=>tx('Time to first major adverse liver outcome (MALO) composite in MASLD.','MASLD中首次主要不良肝臟結局（MALO）複合終點的時間。'),
+   res:()=>tx('Ongoing. Master protocol shared with tirzepatide.','進行中。與替爾泊肽共用主方案。'),
+   stats:()=>tx('n=4,500 | MALO composite | Aug 2030','n=4,500 | MALO複合終點 | 2030年8月'),
+   risk:()=>tx('MASLD outcomes trials are very long. Competitive with Madrigal resmetirom (approved). But weight-loss-driven approach may show broader benefits.','MASLD結局試驗非常長。與Madrigal resmetirom（已獲批）競爭。但減重驅動的方法可能展示更廣泛的獲益。')},
+]},
+{id:'pirt',nm:'Pirtobrutinib',gn:'Jaypirca · Non-Covalent BTK Inhibitor',ta:'on',ph:'approved',
+ pl:()=>tx('Approved + Ph3','已獲批+三期'),tal:()=>tx('Oncology','腫瘤學'),
+ mech:()=>tx('First-in-class non-covalent (reversible) BTK inhibitor. Overcomes covalent BTKi resistance. Low AF/flutter — key safety advantage. Approved R/R MCL + R/R CLL/SLL.','首創非共價（可逆）BTK抑制劑。克服共價BTKi耐藥。低房顫率——關鍵安全優勢。已獲批R/R MCL + R/R CLL/SLL。'),
+ rev:()=>tx('Q4 2025: $148M (+30% YoY). 1L CLL filed US/EU — CLL is ~5× larger market than MCL.','Q4 2025：1.48億（+30%）。1L CLL已提交美/歐——CLL市場約為MCL的5倍。'),
+ inds:[
+  {n:'BRUIN CLL-313 — 1L CLL vs BR',ph:'Phase 3',st:'s',dt:'Jul 2025',
+   brief:()=>tx('<strong>80% PFS risk reduction</strong> vs BR. IRC-assessed.','vs BR <strong>PFS風險降低80%</strong>。IRC評估。'),
+   hyp:()=>tx('PFS of pirtobrutinib mono vs bendamustine+rituximab in treatment-naïve CLL/SLL.','初治CLL/SLL中pirtobrutinib單藥 vs苯達莫司汀+利妥昔單抗的PFS。'),
+   res:()=>tx('80% reduction in risk of progression or death vs BR. Low discontinuation and AF rates.','vs BR進展或死亡風險降低80%。低停藥率和房顫率。'),
+   stats:()=>tx('n=309 | IRC-assessed PFS | ITT','n=309 | IRC評估PFS | ITT'),
+   risk:()=>tx('Comparator is BR (older regimen). Ibrutinib is the more relevant competitor — addressed by CLL-314.','對照藥是BR（較舊方案）。Ibrutinib是更相關的競爭者——由CLL-314解決。')},
+  {n:'BRUIN CLL-314 — 1L CLL vs Ibrutinib',ph:'Phase 3',st:'s',dt:'Jun 2025',
+   brief:()=>tx('<strong>76% PFS risk reduction</strong> vs ibrutinib.','vs ibrutinib <strong>PFS風險降低76%</strong>。'),
+   hyp:()=>tx('ORR (primary) and PFS (key secondary) of pirtobrutinib vs ibrutinib in CLL/SLL.','CLL/SLL中pirtobrutinib vs ibrutinib的ORR（主要）和PFS（關鍵次要）。'),
+   res:()=>tx('76% PFS risk reduction vs ibrutinib (INV-assessed, TN subgroup). PFS data immature — benefit may widen.','vs ibrutinib PFS風險降低76%（INV評估，TN亞群）。PFS數據尚不成熟——獲益可能擴大。'),
+   stats:()=>tx('n=662 | INV-assessed | TN subgroup | PFS immature','n=662 | INV評估 | TN亞群 | PFS不成熟'),
+   risk:()=>tx('PFS data immature — need longer follow-up. Primary endpoint was ORR (Part 1), PFS is secondary.','PFS數據不成熟——需更長隨訪。主要終點為ORR（第1部分），PFS為次要。')},
+  {n:'BRUIN CLL-322 — R/R CLL Combo (PVR vs VR)',ph:'Phase 3',st:'a',dt:'Oct 2026',
+   brief:()=>tx('Pirtobrutinib+venetoclax+rituximab vs VR. n=600.','Pirtobrutinib+維奈克拉+利妥昔單抗 vs VR。n=600。'),
+   hyp:()=>tx('PFS of triple combo PVR vs doublet VR in previously treated CLL/SLL.','既往治療CLL/SLL中三聯PVR vs二聯VR的PFS。'),
+   res:()=>tx('Ongoing. Readout expected 2026.','進行中。預計2026年出結果。'),
+   stats:()=>tx('n=600 | PFS | Oct 2026','n=600 | PFS | 2026年10月'),
+   risk:()=>tx('Combo adds complexity and cost. Must show clear PFS superiority to justify triple therapy.','聯合增加複雜性和成本。必須展示明確的PFS優越性以證明三聯治療合理。')},
+  {n:'BRUIN MCL-321 — R/R MCL Monotherapy',ph:'Phase 3',st:'a',dt:'Jan 2027',
+   brief:()=>tx('vs covalent BTKi. n=500. PFS.','vs共價BTKi。n=500。PFS。'),
+   hyp:()=>tx('PFS of pirtobrutinib mono vs investigator choice of covalent BTK inhibitor in previously treated MCL.','既往治療MCL中pirtobrutinib單藥 vs研究者選擇的共價BTK抑制劑的PFS。'),
+   res:()=>tx('Ongoing.','進行中。'),
+   stats:()=>tx('n=500 | PFS | Jan 2027','n=500 | PFS | 2027年1月'),
+   risk:()=>tx('MCL is a smaller market than CLL. Must show definitive superiority over covalent BTKi to differentiate.','MCL市場小於CLL。必須展示明確優於共價BTKi以差異化。')},
+  {n:'1L CLL — Regulatory Filing',ph:'Filed',st:'a',dt:'2026',
+   brief:()=>tx('Filed US/EU based on CLL-313/314 data. Under review.','基於CLL-313/314數據已提交美/歐。審查中。'),
+   hyp:()=>tx('1L CLL approval based on BRUIN CLL-313 (vs BR) and CLL-314 (vs ibrutinib) data.','基於BRUIN CLL-313（vs BR）和CLL-314（vs ibrutinib）數據的1L CLL批准。'),
+   res:()=>tx('Filed. Under regulatory review.','已提交。監管審查中。'),
+   stats:()=>tx('Filed US + EU','已提交美國+歐盟'),
+   risk:()=>tx('CLL-314 PFS data immature at filing. FDA may want more mature data. But CLL-313 80% PFS reduction is compelling.','CLL-314 PFS數據在提交時不成熟。FDA可能需要更成熟的數據。但CLL-313 80% PFS降低很有說服力。')},
+]},
+{id:'tirz',nm:'Tirzepatide',gn:'Mounjaro/Zepbound · Dual GIP/GLP-1',ta:'cm',ph:'approved',
+ pl:()=>tx('Approved + NILEX','已獲批+擴展'),tal:()=>tx('Cardiometabolic','心血管代謝'),
+ mech:()=>tx('Once-weekly injectable dual GIP/GLP-1 RA. Mounjaro (T2D), Zepbound (obesity, OSA). US incretin SOM 60.5%.','每週一次注射雙重GIP/GLP-1 RA。Mounjaro（T2D），Zepbound（肥胖，OSA）。美國腸促胰素SOM 60.5%。'),
+ rev:()=>tx('FY2025: Mounjaro $23.0B, Zepbound $13.5B. Combined ~$36.5B. World\'s best-selling drug franchise.','FY2025：Mounjaro 230億，Zepbound 135億。合計~365億。全球最暢銷藥物系列。'),
+ inds:[
+  {n:'SURPASS-CVOT — CV Outcomes',ph:'Filed US',st:'s',dt:'Filed',
+   brief:()=>tx('Demonstrated <strong>CV protection</strong> in T2D. Filed with FDA.','在T2D中展示<strong>CV保護</strong>。已向FDA提交。'),
+   hyp:()=>tx('Time to first MACE in T2D patients at CV risk.','高CV風險T2D患者首次MACE的時間。'),
+   res:()=>tx('Positive. CV protection demonstrated. Filed for label expansion.','正面。展示CV保護。已提交標籤擴展。'),
+   stats:()=>tx('Filed US','已提交美國'),
+   risk:()=>tx('US HFpEF rejection is a precedent for regulatory caution.','美國HFpEF被拒是監管謹慎的先例。')},
+  {n:'TOGETHER-PsA — Taltz+Zepbound',ph:'Phase 3b',st:'s',dt:'Q4 2025',
+   brief:()=>tx('<strong>ACR50 33.5% vs 20.4%</strong> combo vs Taltz mono. 64% relative increase.','<strong>ACR50 33.5% vs 20.4%</strong>聯合vs Taltz單藥。相對增加64%。'),
+   hyp:()=>tx('ACR50 + ≥10% wt loss, and ACR50 alone, with ixekizumab+tirzepatide vs ixekizumab alone in PsA+obesity.','PsA+肥胖中ixekizumab+tirzepatide vs ixekizumab單藥的ACR50+≥10%減重及ACR50。'),
+   res:()=>tx('ACR50: 33.5% combo vs 20.4% mono (p≤0.05). ACR50+≥10% wt loss: 31.7% vs 0.8% (p≤0.001). >60% had prior advanced therapy. Safety consistent.','ACR50：33.5%聯合 vs 20.4%單藥（p≤0.05）。ACR50+≥10%減重：31.7% vs 0.8%（p≤0.001）。>60%曾接受先進療法。安全性一致。'),
+   stats:()=>tx('n=279 | 36 weeks | Hypothetical efficacy estimand (mITT)','n=279 | 36週 | 假設療效估計（mITT）'),
+   risk:()=>tx('Phase 3b (not registrational). Combo = 2 separate drugs. Cost/reimbursement challenges. But opens immuno-metabolic market.','三b期（非註冊）。聯合=2種單獨藥物。成本/報銷挑戰。但開闢免疫代謝市場。')},
+  {n:'SURMOUNT-MMO — Morbidity/Mortality',ph:'Phase 3',st:'a',dt:'Oct 2027',
+   brief:()=>tx('n=15,374. All-cause death, MI, stroke, HF composite.','n=15,374。全因死亡、MI、中風、HF複合終點。'),
+   hyp:()=>tx('Reduction in morbidity/mortality composite in adults with obesity.','肥胖成人發病率/死亡率複合終點的降低。'),
+   res:()=>tx('Ongoing.','進行中。'),
+   stats:()=>tx('n=15,374 | Oct 2027','n=15,374 | 2027年10月'),
+   risk:()=>tx('If positive, transforms obesity from "cosmetic" to "life-saving" narrative. Massive implication.','如果正面，將肥胖從「美容」轉變為「救命」敘事。重大影響。')},
+  {n:'Type 1 Diabetes',ph:'Phase 3',st:'a',dt:'May 2027',
+   brief:()=>tx('n=905+465 (long-term). HbA1c in T1D + obesity.','n=905+465（長期）。T1D+肥胖中的HbA1c。'),
+   hyp:()=>tx('Change from baseline in HbA1c in adults with T1D and obesity/overweight.','T1D合併肥胖/超重成人中HbA1c的基線變化。'),
+   res:()=>tx('Ongoing. Two trials.','進行中。兩項試驗。'),
+   stats:()=>tx('n=905+465 | HbA1c | May 2027','n=905+465 | HbA1c | 2027年5月'),
+   risk:()=>tx('T1D is off-label for current GLP-1s. DKA risk must be carefully managed. Insulin dependence cannot be eliminated.','T1D是當前GLP-1的標籤外使用。DKA風險必須謹慎管理。胰島素依賴無法消除。')},
+  {n:'MASLD — SYNERGY-Outcomes',ph:'Phase 3',st:'a',dt:'Aug 2030',
+   brief:()=>tx('Master protocol with retatrutide. n=4,500. Liver outcomes.','與retatrutide主方案。n=4,500。肝臟結局。'),
+   hyp:()=>tx('Major adverse liver outcome composite in MASLD (shared protocol with retatrutide).','MASLD中的主要不良肝臟結局複合終點（與retatrutide共用方案）。'),
+   res:()=>tx('Ongoing.','進行中。'),
+   stats:()=>tx('n=4,500 | Aug 2030','n=4,500 | 2030年8月'),
+   risk:()=>tx('Very long timeline. Competitive with Madrigal resmetirom.','時間線很長。與Madrigal resmetirom競爭。')},
+  {n:'Pediatric/Adolescent T2D',ph:'Approved',st:'s',dt:'2025',
+   brief:()=>tx('Approved US for age ≥10 years.','美國批准用於≥10歲。'),
+   hyp:()=>tx('Efficacy and safety of tirzepatide in pediatric patients ≥10 years with T2D.','替爾泊肽在≥10歲T2D兒童患者中的療效和安全性。'),
+   res:()=>tx('Approved in US and EU.','已在美國和歐盟獲批。'),
+   stats:()=>tx('US + EU approved','美國+歐盟獲批'),
+   risk:()=>tx('Pediatric safety monitoring ongoing. Long-term effects in growing children need surveillance.','兒童安全性監測進行中。對成長中兒童的長期影響需要監視。')},
+  {n:'TOGETHER-PsO — Taltz+Zepbound in Psoriasis',ph:'Phase 3',st:'a',dt:'May 2026',
+   brief:()=>tx('n=250. PASI 100 + ≥10% weight reduction.','n=250。PASI 100+≥10%體重減輕。'),
+   hyp:()=>tx('Simultaneous PASI 100 and ≥10% weight reduction with ixekizumab+tirzepatide vs ixekizumab alone in psoriasis+obesity.','銀屑病+肥胖中ixekizumab+tirzepatide vs ixekizumab單藥同時達到PASI 100和≥10%減重。'),
+   res:()=>tx('Primary completion Jan 2026. Results expected soon.','主要完成2026年1月。預計即將出結果。'),
+   stats:()=>tx('n=250 | PASI 100 + wt loss | Jan 2026 primary','n=250 | PASI 100+減重 | 2026年1月主要完成'),
+   risk:()=>tx('Same combo cost/reimbursement challenges as TOGETHER-PsA.','與TOGETHER-PsA相同的聯合成本/報銷挑戰。')},
+  {n:'Heart Failure pEF',ph:'Reg Review',st:'a',dt:'EU ✓ / US ✗',
+   brief:()=>tx('EU approved. US rejected.','歐盟獲批。美國被拒。'),
+   hyp:()=>tx('Evaluate tirzepatide in HFpEF with obesity.','評估替爾泊肽在合併肥胖的HFpEF中的效果。'),
+   res:()=>tx('EU approved. US FDA rejected — regulatory setback.','歐盟獲批。美國FDA被拒——監管挫折。'),
+   stats:()=>tx('EU approved | US rejected','歐盟獲批 | 美國被拒'),
+   risk:()=>tx('US rejection is a precedent for regulatory caution on NILEX filings. EU-only approval limits commercial impact.','美國被拒是NILEX申報監管謹慎的先例。僅歐盟批准限制商業影響。')},
+]},
+{id:'leb',nm:'Lebrikizumab',gn:'Ebglyss · Anti-IL-13',ta:'im',ph:'approved',
+ pl:()=>tx('Approved + NILEX','已獲批+擴展'),tal:()=>tx('Immunology','免疫學'),
+ mech:()=>tx('Anti-IL-13 mAb for atopic dermatitis. Expanding into CRSwNP, allergic rhinitis, pediatric AD.','抗IL-13單抗用於特應性皮膚炎。擴展至CRSwNP、過敏性鼻炎、兒童AD。'),
+ rev:()=>tx('Q4 2025: $134M. US TRx +25% QoQ. 6 Phase 3 trials ongoing. Q8W maintenance filing 2026.','Q4 2025：1.34億。美國TRx環比+25%。6項三期試驗進行中。Q8W維持2026年申報。'),
+ inds:[
+  {n:'Pediatric AD — ADorable-1',ph:'Phase 3',st:'s',dt:'Mar 16, 2026 ✓',
+   brief:()=>tx('<strong>EASI-75: 63% vs 22% placebo</strong>. IGA 0,1: 44% vs 15%. First selective IL-13 inhibitor positive in pediatric 6mo–18yr. n=363.','<strong>EASI-75：63% vs 安慰劑22%</strong>。IGA 0,1：44% vs 15%。首個在6月–18歲兒科中正面的選擇性IL-13抑制劑。n=363。'),
+   hyp:()=>tx('Co-primary endpoints: EASI-75 (≥75% reduction in Eczema Area and Severity Index) and IGA 0,1 (clear or almost clear skin with ≥2-point improvement) at Week 16 in pediatric patients aged 6 months to <18 years with moderate-to-severe atopic dermatitis. Weight-based dosing with required topical corticosteroids.','共同主要終點：6月至<18歲中重度特應性皮膚炎兒科患者第16週時的EASI-75（濕疹面積和嚴重程度指數≥75%降低）和IGA 0,1（皮膚清除或幾乎清除，≥2分改善）。基於體重給藥，需聯合外用皮質類固醇。'),
+   res:()=>tx('<strong>Met both co-primary endpoints at Week 16:</strong> EASI-75: 63% vs 22% placebo. IGA 0,1 (clear/almost clear): 44% vs 15% placebo. Key secondary: EASI-90 (near-complete clearance): 39% vs 11% placebo. Pruritus NRS ≥4-point improvement (≥6yr, score ≥4 at baseline): 35% vs 6% placebo. First and only selective IL-13 inhibitor with positive Phase 3 in patients as young as 6 months. Safety consistent with adult/adolescent profile — no new signals, no injection site pain reported. Lilly plans regulatory submissions for label expansion.','<strong>第16週達到兩個共同主要終點：</strong>EASI-75：63% vs 安慰劑22%。IGA 0,1（清除/幾乎清除）：44% vs 安慰劑15%。關鍵次要：EASI-90（接近完全清除）：39% vs 安慰劑11%。瘙癢NRS ≥4分改善（≥6歲，基線評分≥4）：35% vs 安慰劑6%。首個且唯一在低至6月齡患者中取得三期正面的選擇性IL-13抑制劑。安全性與成人/青少年一致——無新信號，無注射部位疼痛報告。禮來計劃提交標籤擴展的監管申請。'),
+   stats:()=>tx('n=363 | Randomized, double-blind, placebo-controlled | 16 weeks | Weight-based dosing | Co-primary: EASI-75 + IGA 0,1 | NCT05559359 | Released Mar 16, 2026','n=363 | 隨機、雙盲、安慰劑對照 | 16週 | 基於體重給藥 | 共同主要終點：EASI-75 + IGA 0,1 | NCT05559359 | 2026年3月16日發布'),
+   risk:()=>tx('16-week duration is relatively short — long-term safety data from ADorable-2 extension (52wk) expected later this year. Topical corticosteroids were required concomitantly, so EBGLYSS efficacy includes TCS contribution. Competitive: dupilumab already approved for pediatric AD (6mo+). EBGLYSS must demonstrate differentiated value (monthly maintenance dosing, selective IL-13 targeting, no injection site pain) to gain share in this established market.','16週時間相對較短——ADorable-2延伸研究（52週）的長期安全性數據預計今年晚些時候公布。需同時使用外用皮質類固醇，因此EBGLYSS療效包含TCS的貢獻。競爭：dupilumab已獲批兒科AD（6月+）。EBGLYSS必須展示差異化價值（每月維持給藥、選擇性IL-13靶向、無注射部位疼痛）以在此成熟市場中獲得份額。')},
+  {n:'Pediatric AD Long-Term — ADorable-2',ph:'Phase 3',st:'a',dt:'Apr 2029',
+   brief:()=>tx('52-week extension of ADorable-1 enrollees. n=310. Long-term safety.','ADorable-1入組者的52週延伸。n=310。長期安全性。'),
+   hyp:()=>tx('Long-term safety and efficacy of EBGLYSS in pediatric patients enrolled from ADorable-1. Primary endpoint: discontinuation rate due to AEs.','來自ADorable-1的兒科患者中EBGLYSS的長期安全性和療效。主要終點：因AE停藥率。'),
+   res:()=>tx('Ongoing. Results expected later in 2026.','進行中。預計2026年晚些時候出結果。'),
+   stats:()=>tx('n=310 | 52-week extension | NCT05735483 | Apr 2029 completion','n=310 | 52週延伸 | NCT05735483 | 2029年4月完成'),
+   risk:()=>tx('Long-term pediatric data is critical for full regulatory submission and physician confidence. Must confirm sustained efficacy and safety in growing children.','長期兒科數據對完整監管提交和醫師信心至關重要。必須確認在成長中兒童中的持續療效和安全性。')},
+  {n:'CRSwNP — CONTRAST-NP',ph:'Phase 3',st:'a',dt:'May 2027',
+   brief:()=>tx('n=510. Nasal congestion severity score.','n=510。鼻塞嚴重程度評分。'),
+   hyp:()=>tx('Mean change from baseline in participant-reported nasal congestion score severity in CRSwNP with intranasal corticosteroids.','CRSwNP合併鼻內皮質類固醇中參與者報告的鼻塞評分嚴重程度的基線平均變化。'),
+   res:()=>tx('Ongoing.','進行中。'),
+   stats:()=>tx('n=510 | NCS severity | May 2027','n=510 | NCS嚴重程度 | 2027年5月'),
+   risk:()=>tx('Competitive with dupilumab (approved CRSwNP) and mepolizumab. Must show differentiation.','與dupilumab（已批CRSwNP）和mepolizumab競爭。必須展示差異化。')},
+  {n:'Allergic Rhinitis — PREPARED-1',ph:'Phase 3',st:'a',dt:'Sep 2026',
+   brief:()=>tx('n=450. TNSS at week 16. Perennial allergens.','n=450。16週TNSS。常年過敏原。'),
+   hyp:()=>tx('Mean change from baseline in Total Nasal Symptom Score (TNSS) at week 16 in perennial allergic rhinitis.','常年過敏性鼻炎中第16週的總鼻症狀評分（TNSS）基線平均變化。'),
+   res:()=>tx('Ongoing.','進行中。'),
+   stats:()=>tx('n=450 | TNSS | Sep 2026','n=450 | TNSS | 2026年9月'),
+   risk:()=>tx('New indication expansion. Market size for biologic-treated AR is uncertain.','新適應症擴展。生物製劑治療的AR市場規模不確定。')},
+  {n:'Atopic Hand/Foot Dermatitis — ADtouch',ph:'Phase 3',st:'a',dt:'Jul 2026',
+   brief:()=>tx('n=206. HF-IGA score.','n=206。HF-IGA評分。'),
+   hyp:()=>tx('Hand and Foot IGA score of 0 or 1 with ≥2-point improvement in moderate-to-severe atopic hand/foot dermatitis.','中重度手足特應性皮膚炎中手足IGA評分0或1且≥2分改善。'),
+   res:()=>tx('Ongoing.','進行中。'),
+   stats:()=>tx('n=206 | HF-IGA | Jul 2026','n=206 | HF-IGA | 2026年7月'),
+   risk:()=>tx('Niche indication but unmet need. Small sample. Supportive for broader lebrikizumab franchise.','小眾適應症但有未滿足需求。小樣本。支持更廣泛的lebrikizumab系列。')},
+]},
+{id:'don',nm:'Donanemab',gn:'Kisunla · Anti-Amyloid (N3pG)',ta:'ns',ph:'approved',
+ pl:()=>tx('Approved + Ph3','已獲批+三期'),tal:()=>tx('Neuroscience','神經科學'),
+ mech:()=>tx('Anti-amyloid beta (N3pG) antibody. First AD treatment with defined stopping point. US market leader >50% TRx share.','抗澱粉樣β蛋白（N3pG）抗體。首個有明確停藥點的AD治療。美國市場領導者>50% TRx份額。'),
+ rev:()=>tx('Q4 2025: $109M (+54% QoQ). 13 countries OUS. TRAILBLAZER-ALZ 2: slowed decline 35%.','Q4 2025：1.09億（QoQ +54%）。13國OUS。TRAILBLAZER-ALZ 2：減緩衰退35%。'),
+ inds:[
+  {n:'Preclinical AD — TRAILBLAZER-ALZ 3',ph:'Phase 3',st:'a',dt:'Nov 2027',
+   brief:()=>tx('n=2,996. Prevention trial. CDR progression.','n=2,996。預防試驗。CDR進展。'),
+   hyp:()=>tx('Time to clinical progression in preclinical AD (amyloid+ but no symptoms).','臨床前AD（澱粉樣蛋白+但無症狀）中至臨床進展的時間。'),
+   res:()=>tx('Ongoing.','進行中。'),
+   stats:()=>tx('n=2,996 | CDR | Nov 2027','n=2,996 | CDR | 2027年11月'),
+   risk:()=>tx('Prevention trials notoriously difficult. Slow event rate. ARIA remains a concern.','預防試驗眾所周知困難。事件率低。ARIA仍是擔憂。')},
+  {n:'Early Symptomatic AD — TRAILBLAZER-ALZ 5',ph:'Phase 3',st:'a',dt:'May 2028',
+   brief:()=>tx('n=1,500. iADRS change. Next-gen early AD trial.','n=1,500。iADRS變化。下一代早期AD試驗。'),
+   hyp:()=>tx('Change from baseline in integrated Alzheimer\'s Disease Rating Scale (iADRS) in early symptomatic AD.','早期症狀AD中整合阿爾茨海默病評定量表（iADRS）的基線變化。'),
+   res:()=>tx('Ongoing.','進行中。'),
+   stats:()=>tx('n=1,500 | iADRS | May 2028','n=1,500 | iADRS | 2028年5月'),
+   risk:()=>tx('TRAILBLAZER-ALZ 2 showed 35% slowing in intermediate/high tau but missed co-primary in overall population. Must show broader benefit.','TRAILBLAZER-ALZ 2在中高tau中顯示35%減緩但在總體人群中未達共同主要終點。必須展示更廣泛的獲益。')},
+  {n:'EU Filing — Early AD',ph:'Reg Review',st:'a',dt:'Pending',
+   brief:()=>tx('EU regulatory review for early Alzheimer\'s disease.','早期阿爾茨海默病的歐盟監管審查。'),
+   hyp:()=>tx('EU marketing authorization for donanemab in early symptomatic AD.','早期症狀AD中donanemab的歐盟上市許可。'),
+   res:()=>tx('Under EU review.','歐盟審查中。'),
+   stats:()=>tx('EU filing pending','歐盟申報待定'),
+   risk:()=>tx('EU has historically been more cautious on AD drugs. ARIA monitoring requirements may differ.','歐盟歷來對AD藥物更為謹慎。ARIA監測要求可能不同。')},
+]},
+{id:'rem',nm:'Remternetug',gn:'Next-Gen Anti-Amyloid',ta:'ns',ph:'p3',
+ pl:()=>tx('Phase 3','第三期'),tal:()=>tx('Neuroscience','神經科學'),
+ mech:()=>tx('Next-gen anti-amyloid with rapid plaque clearance. SC dosing potential. Designed to succeed donanemab.','下一代抗澱粉樣蛋白，快速斑塊清除。可SC給藥。設計用於接替donanemab。'),
+ rev:()=>tx('TRAILRUNNER-ALZ 1: n=1,667, primary completion Mar 2026 (imminent).','TRAILRUNNER-ALZ 1：n=1,667，主要完成2026年3月（即將到來）。'),
+ inds:[
+  {n:'TRAILRUNNER-ALZ 1',ph:'Phase 3',st:'a',dt:'Mar 2026',
+   brief:()=>tx('n=1,667. Amyloid PET clearance. <strong>Imminent</strong>.','n=1,667。澱粉樣PET清除。<strong>即將到來</strong>。'),
+   hyp:()=>tx('% participants reaching amyloid plaque clearance on PET.','PET上達到澱粉樣斑塊清除的參與者百分比。'),
+   res:()=>tx('Primary completion March 2026.','主要完成2026年3月。'),
+   stats:()=>tx('n=1,667 | Mar 2026','n=1,667 | 2026年3月'),
+   risk:()=>tx('Primary endpoint is plaque clearance (biomarker), not clinical benefit. Clinical outcomes from ALZ 3 won\'t read until 2029.','主要終點是斑塊清除（生物標記物），非臨床獲益。ALZ 3的臨床結局要到2029年才能讀出。')},
+]},
+{id:'olom',nm:'Olomorasib',gn:'KRAS G12C Inhibitor · NSCLC',ta:'on',ph:'p3',
+ pl:()=>tx('Phase 3','第三期'),tal:()=>tx('Oncology','腫瘤學'),
+ mech:()=>tx('Selective KRAS G12C inhibitor for NSCLC. Combination with pembrolizumab ± chemo. SUNRAY program.','選擇性KRAS G12C抑制劑用於NSCLC。與pembrolizumab±化療聯合。SUNRAY項目。'),
+ rev:()=>tx('SUNRAY-01: n=1,016 (1L). SUNRAY-02: n=700 (adjuvant). KRAS G12C in ~13% of NSCLC.','SUNRAY-01：n=1,016（1L）。SUNRAY-02：n=700（輔助）。KRAS G12C佔NSCLC ~13%。'),
+ inds:[
+  {n:'SUNRAY-01 — 1L NSCLC',ph:'Phase 3',st:'a',dt:'Oct 2026',
+   brief:()=>tx('+pembrolizumab ± chemo. n=1,016.','+ pembrolizumab±化療。n=1,016。'),
+   hyp:()=>tx('Evaluate olomorasib+pembro ± chemo in 1L advanced KRAS G12C-mutant NSCLC.','評估olomorasib+pembro±化療在1L晚期KRAS G12C突變NSCLC中的效果。'),
+   res:()=>tx('Dose optimization complete. Efficacy ongoing.','劑量優化完成。療效進行中。'),
+   stats:()=>tx('n=1,016 | Oct 2026','n=1,016 | 2026年10月'),
+   risk:()=>tx('Competitive: sotorasib (Amgen), adagrasib (Mirati). Must show combo superiority.','競爭：sotorasib（Amgen）、adagrasib（Mirati）。必須顯示聯合優越性。')},
+  {n:'SUNRAY-02 — Adjuvant NSCLC (Resected + Unresected)',ph:'Phase 3',st:'a',dt:'May 2029',
+   brief:()=>tx('DFS endpoint. n=700. Resected and unresectable.','DFS終點。n=700。已切除和不可切除。'),
+   hyp:()=>tx('Disease-free survival in resected or unresectable KRAS G12C-mutant NSCLC with standard of care.','已切除或不可切除KRAS G12C突變NSCLC聯合標準治療的無病生存期。'),
+   res:()=>tx('Ongoing.','進行中。'),
+   stats:()=>tx('n=700 | DFS | May 2029','n=700 | DFS | 2029年5月'),
+   risk:()=>tx('Adjuvant setting has high regulatory bar. Long timeline to readout.','輔助治療的監管門檻高。讀出時間長。')},
+]},
+{id:'efsit',nm:'Insulin Efsitora Alfa',gn:'Once-Weekly Basal Insulin',ta:'cm',ph:'review',
+ pl:()=>tx('Reg Review','審查中'),tal:()=>tx('Cardiometabolic','心血管代謝'),
+ mech:()=>tx('Once-weekly basal insulin for T2D. Filed US/EU/JP.','每週一次基礎胰島素用於T2D。已提交美/歐/日。'),
+ rev:()=>tx('Filed all major markets. Weekly dosing addresses adherence barriers. Competes with Novo icodec.','已在所有主要市場提交。每週給藥解決依從性障礙。與Novo icodec競爭。'),
+ inds:[
+  {n:'T2D — Filed US/EU/JP',ph:'Filed',st:'a',dt:'2026',
+   brief:()=>tx('Under review in all major markets.','在所有主要市場審查中。'),
+   hyp:()=>tx('Non-inferior glycemic control vs daily basal insulin with weekly convenience.','與每日基礎胰島素相比，每週便利性下非劣效血糖控制。'),
+   res:()=>tx('Under review.','審查中。'),
+   stats:()=>tx('Filed US/EU/JP','已提交美/歐/日'),
+   risk:()=>tx('Novo icodec (weekly insulin) already approved in some markets. Must show competitive profile.','Novo icodec（每週胰島素）已在部分市場獲批。必須顯示有競爭力的特徵。')},
+]},
+{id:'iml',nm:'Imlunestrant',gn:'Inluriyo · Oral SERD',ta:'on',ph:'approved',
+ pl:()=>tx('Approved','已獲批'),tal:()=>tx('Oncology','腫瘤學'),
+ mech:()=>tx('Oral selective estrogen receptor degrader (SERD). Targets ESR1 mutations driving endocrine resistance in ER+/HER2− breast cancer. Mono + combo with abemaciclib.','口服選擇性雌激素受體降解劑（SERD）。靶向驅動ER+/HER2−乳腺癌內分泌耐藥的ESR1突變。單藥+與abemaciclib聯合。'),
+ rev:()=>tx('Approved Oct 2025 (EMBER-3). Q4 2025: $14M (launch). EMBER-4 adjuvant (n=8,000) is major catalyst — early BC far larger market.','2025年10月獲批（EMBER-3）。Q4 2025：1400萬（上市）。EMBER-4輔助（n=8,000）是主要催化劑——早期BC市場遠更大。'),
+ inds:[
+  {n:'EMBER-3 — ER+/HER2− mBC',ph:'Approved',st:'s',dt:'Oct 2025',
+   brief:()=>tx('Met primary PFS endpoint. First oral SERD approved.','達到PFS主要終點。首個口服SERD獲批。'),
+   hyp:()=>tx('PFS of imlunestrant vs standard endocrine therapy in ER+/HER2− advanced/metastatic BC.','ER+/HER2−晚期/轉移性BC中imlunestrant vs標準內分泌療法的PFS。'),
+   res:()=>tx('Met primary PFS endpoint. Approved as mono + combo with abemaciclib.','達到PFS主要終點。作為單藥+與abemaciclib聯合獲批。'),
+   stats:()=>tx('n=874 | PFS by investigator | Jun 2024 primary completion','n=874 | 研究者評估PFS | 2024年6月主要完成'),
+   risk:()=>tx('Competitive: AstraZeneca camizestrant. Must demonstrate real-world uptake and differentiation.','競爭：AstraZeneca camizestrant。必須展示真實世界中的使用和差異化。')},
+  {n:'EMBER-4 — Adjuvant Early BC',ph:'Phase 3',st:'a',dt:'Oct 2027',
+   brief:()=>tx('<strong>n=8,000</strong>. IDFS. One of Lilly\'s largest oncology trials.','<strong>n=8,000</strong>。IDFS。禮來最大腫瘤學試驗之一。'),
+   hyp:()=>tx('Invasive disease-free survival of imlunestrant vs standard endocrine in early breast cancer.','早期乳腺癌中imlunestrant vs標準內分泌的無浸潤疾病生存期。'),
+   res:()=>tx('Enrolling. Early BC is much larger market than metastatic.','入組中。早期BC市場遠大於轉移性。'),
+   stats:()=>tx('n=8,000 | IDFS | Oct 2027 primary | Mar 2032 final','n=8,000 | IDFS | 2027年10月主要 | 2032年3月最終'),
+   risk:()=>tx('Massive trial. Years to full readout. But early BC market is transformative if positive.','大規模試驗。數年才能完全讀出。但如果正面，早期BC市場具變革性。')},
+]},
+{id:'sof',nm:'Sofetabart Mipitecan',gn:'FRα ADC · Antibody-Drug Conjugate',ta:'on',ph:'p3',
+ pl:()=>tx('Phase 1b → Phase 3','第1b期→第三期'),tal:()=>tx('Oncology','腫瘤學'),
+ mech:()=>tx('Folate receptor alpha-targeting ADC. FDA Breakthrough Therapy Designation Jan 2026 for platinum-resistant ovarian cancer.','葉酸受體α靶向ADC。2026年1月獲FDA突破性治療認定用於鉑耐藥卵巢癌。'),
+ rev:()=>tx('FRAmework-01 Phase 3: n=1,080 across Pt-resistant (Part A) and Pt-sensitive (Part B). BTD accelerates timeline.','FRAmework-01三期：n=1,080覆蓋鉑耐藥（A部分）和鉑敏感（B部分）。BTD加速時程。'),
+ inds:[
+  {n:'Pt-Resistant Ovarian Ca — FRAmework-01A',ph:'Phase 3',st:'a',dt:'Apr 2028',
+   brief:()=>tx('PFS by RECIST. BTD granted. n=1,080.','RECIST的PFS。已獲BTD。n=1,080。'),
+   hyp:()=>tx('PFS in platinum-resistant ovarian/fallopian tube/peritoneal cancer.','鉑耐藥卵巢/輸卵管/腹膜癌的PFS。'),
+   res:()=>tx('Phase 3 initiated based on positive Phase 1a/1b data. BTD granted Jan 2026.','基於正面1a/1b期數據啟動三期。2026年1月獲BTD。'),
+   stats:()=>tx('n=1,080 (combined) | PFS by RECIST | Apr 2028','n=1,080（合計）| RECIST的PFS | 2028年4月'),
+   risk:()=>tx('ADC space highly competitive (Elahere/mirvetuximab). Must show differentiated efficacy/safety.','ADC領域競爭激烈（Elahere/mirvetuximab）。必須展示差異化療效/安全性。')},
+  {n:'Pt-Sensitive Ovarian Ca — FRAmework-01B',ph:'Phase 3',st:'p',dt:'2028+',
+   brief:()=>tx('Part B of FRAmework-01. Platinum-sensitive.','FRAmework-01的B部分。鉑敏感。'),
+   hyp:()=>tx('PFS in platinum-sensitive ovarian cancer (Part B of same Phase 3 trial).','鉑敏感卵巢癌的PFS（同一三期試驗的B部分）。'),
+   res:()=>tx('Part B planned.','B部分計劃中。'),
+   stats:()=>tx('Part of n=1,080 combined trial','合計n=1,080試驗的一部分'),
+   risk:()=>tx('Pt-sensitive has more competitive treatment options than Pt-resistant.','鉑敏感的治療選擇比鉑耐藥更具競爭力。')},
+]},
+{id:'elo',nm:'Eloralintide',gn:'LY3841136 · Amylin Receptor Agonist',ta:'cm',ph:'p3',
+ pl:()=>tx('Phase 2/3','第二/三期'),tal:()=>tx('Cardiometabolic','心血管代謝'),
+ mech:()=>tx('Highly selective amylin receptor agonist — novel mechanism distinct from GLP-1. Phase 3 initiated 2026 (ENLIGHTEN-2). Studying combo with tirzepatide and macupatide.','高選擇性胰島澱粉樣蛋白受體激動劑——不同於GLP-1的新機制。2026年啟動三期（ENLIGHTEN-2）。研究與替爾泊肽和macupatide的聯合。'),
+ rev:()=>tx('ENLIGHTEN-2 Phase 3: n=1,035 (obesity+T2D). Phase 2 combo with tirzepatide: n=350, Jun 2026.','ENLIGHTEN-2三期：n=1,035（肥胖+T2D）。與替爾泊肽聯合二期：n=350，2026年6月。'),
+ inds:[
+  {n:'ENLIGHTEN-2 — Obesity+T2D',ph:'Phase 3',st:'a',dt:'Jan 2028',
+   brief:()=>tx('n=1,035. Body weight % change. Novel amylin mechanism.','n=1,035。體重百分比變化。新型胰島澱粉機制。'),
+   hyp:()=>tx('Percent change from baseline in body weight in participants with obesity or overweight and T2D.','肥胖或超重合併T2D參與者體重百分比變化。'),
+   res:()=>tx('Phase 3 initiated. Enrolling.','三期已啟動。入組中。'),
+   stats:()=>tx('n=1,035 | Body weight % | Jan 2028','n=1,035 | 體重百分比 | 2028年1月'),
+   risk:()=>tx('Novel mechanism — less clinical precedent than GLP-1 class. Must prove differentiation vs established incretins.','新機制——臨床先例少於GLP-1類。必須證明與已有腸促胰素的差異化。')},
+  {n:'Combo with tirzepatide (Phase 2)',ph:'Phase 2',st:'a',dt:'Jun 2026',
+   brief:()=>tx('n=350. Alone or combo with tirzepatide.','n=350。單藥或與替爾泊肽聯合。'),
+   hyp:()=>tx('Body weight change with eloralintide + tirzepatide alone or combo.','eloralintide+替爾泊肽單藥或聯合的體重變化。'),
+   res:()=>tx('Ongoing.','進行中。'),
+   stats:()=>tx('n=350 | Jun 2026','n=350 | 2026年6月'),
+   risk:()=>tx('Phase 2. Combo adds complexity.','二期。聯合增加複雜性。')},
+]},
+{id:'lep2',nm:'Lepodisiran',gn:'ACCLAIM-Lp(a) · Anti-Lp(a) siRNA',ta:'cm',ph:'p3',
+ pl:()=>tx('Phase 3','第三期'),tal:()=>tx('Cardiometabolic','心血管代謝'),
+ mech:()=>tx('siRNA targeting lipoprotein(a) — a major independent CV risk factor with no approved therapy. Permanent Lp(a) lowering with periodic dosing.','靶向脂蛋白(a)的siRNA——目前無獲批療法的主要獨立CV風險因子。定期給藥永久降低Lp(a)。'),
+ rev:()=>tx('ACCLAIM-Lp(a): n=17,300. One of largest CV outcomes trials ever. MACE-4 composite. Mar 2029.','ACCLAIM-Lp(a)：n=17,300。史上最大CV結局試驗之一。MACE-4複合終點。2029年3月。'),
+ inds:[
+  {n:'ASCVD Outcomes — ACCLAIM-Lp(a)',ph:'Phase 3',st:'a',dt:'Mar 2029',
+   brief:()=>tx('<strong>n=17,300</strong>. MACE-4. One of largest CV trials ever.','<strong>n=17,300</strong>。MACE-4。史上最大CV試驗之一。'),
+   hyp:()=>tx('Time to first MACE-4 event in adults with elevated Lp(a) and ASCVD/at-risk for ASCVD.','升高Lp(a)且有ASCVD/ASCVD風險的成人中首次MACE-4事件的時間。'),
+   res:()=>tx('Enrolling.','入組中。'),
+   stats:()=>tx('n=17,300 | MACE-4 | Mar 2029','n=17,300 | MACE-4 | 2029年3月'),
+   risk:()=>tx('Lp(a) hypothesis (lowering it reduces CV events) remains unproven at scale. Competing with Novartis pelacarsen. Very long timeline.','Lp(a)假設（降低它可減少CV事件）在大規模中仍未證實。與Novartis pelacarsen競爭。時間線很長。')},
+]},
+{id:'muva',nm:'Muvalaplin',gn:'MOVE-Lp(a) · Oral Lp(a) Inhibitor',ta:'cm',ph:'p3',
+ pl:()=>tx('Phase 3','第三期'),tal:()=>tx('Cardiometabolic','心血管代謝'),
+ mech:()=>tx('Oral small molecule Lp(a) inhibitor. Disrupts Lp(a) assembly. Complements lepodisiran (siRNA) with oral convenience.','口服小分子Lp(a)抑制劑。破壞Lp(a)組裝。以口服便利性補充lepodisiran（siRNA）。'),
+ rev:()=>tx('MOVE-Lp(a): n=10,450. MACE-4 composite. Mar 2031.','MOVE-Lp(a)：n=10,450。MACE-4複合終點。2031年3月。'),
+ inds:[
+  {n:'Elevated Lp(a) — MOVE-Lp(a)',ph:'Phase 3',st:'a',dt:'Mar 2031',
+   brief:()=>tx('n=10,450. MACE-4 outcomes.','n=10,450。MACE-4結局。'),
+   hyp:()=>tx('MACE-4 composite in adults with elevated Lp(a).','升高Lp(a)成人中的MACE-4複合終點。'),
+   res:()=>tx('Enrolling.','入組中。'),
+   stats:()=>tx('n=10,450 | MACE-4 | Mar 2031','n=10,450 | MACE-4 | 2031年3月'),
+   risk:()=>tx('Same Lp(a) hypothesis risk as lepodisiran. Oral convenience is the differentiator. Very long timeline.','與lepodisiran相同的Lp(a)假設風險。口服便利性是差異化因素。時間線很長。')},
+]},
+{id:'bren',nm:'Brenipatide',gn:'GLP-1/Glucagon · Neuroscience/Addiction',ta:'ns',ph:'p3',
+ pl:()=>tx('Phase 2/3','第二/三期'),tal:()=>tx('Neuroscience','神經科學'),
+ mech:()=>tx('GLP-1/Glucagon dual agonist studied across addiction and neuropsychiatric indications: AUD, tobacco, bipolar disorder, asthma, and major depressive disorder.','GLP-1/升糖素雙重激動劑，在成癮和神經精神適應症中研究：AUD、煙草、雙相障礙、哮喘和重度抑鬱障礙。'),
+ rev:()=>tx('Phase 3 AUD: 2×1,100 pts. Phase 2 across tobacco (n=222), bipolar (n=400), asthma (n=531). MDD Phase 3 planned 2026.','三期AUD：2×1,100名患者。二期覆蓋煙草（n=222）、雙相（n=400）、哮喘（n=531）。MDD三期計劃2026年。'),
+ inds:[
+  {n:'AUD — RENEW-ALC 1/2',ph:'Phase 3',st:'a',dt:'Apr 2028',
+   brief:()=>tx('2×1,100 patients. TLFB drinking patterns.','2×1,100名患者。TLFB飲酒模式。'),
+   hyp:()=>tx('Change in drinking patterns in moderate-to-severe AUD assessed by Timeline Followback.','中重度AUD中飲酒模式的變化（TLFB評估）。'),
+   res:()=>tx('Ongoing. Two parallel Phase 3 trials.','進行中。兩項平行三期試驗。'),
+   stats:()=>tx('2 trials, n=2,200 total | Apr 2028','2項試驗，共n=2,200 | 2028年4月'),
+   risk:()=>tx('AUD is challenging with high placebo response. GLP-1 mechanism in addiction is novel and unproven at scale.','AUD具挑戰性，安慰劑反應率高。GLP-1在成癮中的機制是新穎的，在大規模中未經證實。')},
+  {n:'Tobacco — RENEW-Smk-1',ph:'Phase 2',st:'a',dt:'Feb 2027',
+   brief:()=>tx('n=222. CO-confirmed abstinence.','n=222。CO確認戒菸。'),
+   hyp:()=>tx('CO-confirmed continuous abstinence from cigarette smoking.','CO確認持續戒菸。'),
+   res:()=>tx('Ongoing.','進行中。'),
+   stats:()=>tx('n=222 | Feb 2027','n=222 | 2027年2月'),
+   risk:()=>tx('Phase 2. Small sample. Novel mechanism.','二期。小樣本。新機制。')},
+  {n:'Bipolar Disorder — RENEW-Bipolar-1',ph:'Phase 2',st:'a',dt:'Nov 2027',
+   brief:()=>tx('n=400. Time to relapse.','n=400。至復發時間。'),
+   hyp:()=>tx('Time to relapse in adults with bipolar disorder.','雙相障礙成人中至復發的時間。'),
+   res:()=>tx('Ongoing.','進行中。'),
+   stats:()=>tx('n=400 | Nov 2027','n=400 | 2027年11月'),
+   risk:()=>tx('Exploratory neuropsych indication. GLP-1 in bipolar is highly novel.','探索性神經精神適應症。GLP-1在雙相中高度新穎。')},
+  {n:'Major Depressive Disorder',ph:'Phase 3',st:'p',dt:'2026+',
+   brief:()=>tx('Phase 3 initiation planned 2026.','計劃2026年啟動三期。'),
+   hyp:()=>tx('Planned Phase 3 in MDD.','計劃MDD三期。'),
+   res:()=>tx('Not yet initiated.','尚未啟動。'),
+   stats:()=>tx('Planned 2026','計劃2026年'),
+   risk:()=>tx('MDD market is large but highly competitive with established therapies.','MDD市場大但與成熟療法競爭激烈。')},
+]},
+{id:'miri',nm:'Mirikizumab',gn:'Omvoh · Anti-IL-23p19',ta:'im',ph:'approved',
+ pl:()=>tx('Approved + NILEX','已獲批+擴展'),tal:()=>tx('Immunology','免疫學'),
+ mech:()=>tx('Anti-IL-23p19 mAb for UC and Crohn\'s. Novel COMMIT program studies combo with tirzepatide for IBD + obesity — targeting both disease and metabolic comorbidity.','抗IL-23p19單抗用於UC和克羅恩病。新型COMMIT項目研究與替爾泊肽聯合用於IBD+肥胖——同時靶向疾病和代謝共病。'),
+ rev:()=>tx('Q4 2025: $88M (+22% QoQ). COMMIT-UC/CD combo with tirzepatide is novel immuno-metabolic approach.','Q4 2025：8800萬（QoQ +22%）。COMMIT-UC/CD與替爾泊肽聯合是新型免疫代謝方法。'),
+ inds:[
+  {n:'UC + Tirzepatide — COMMIT-UC',ph:'Phase 3',st:'a',dt:'Apr 2028',
+   brief:()=>tx('n=350. Clinical remission + ≥10% wt loss.','n=350。臨床緩解+≥10%減重。'),
+   hyp:()=>tx('Simultaneous clinical remission and ≥10% weight reduction in UC + obesity.','UC+肥胖中同時臨床緩解和≥10%減重。'),
+   res:()=>tx('Ongoing.','進行中。'),
+   stats:()=>tx('n=350 | Apr 2028','n=350 | 2028年4月'),
+   risk:()=>tx('Novel combo approach — unproven. Dual cost/reimbursement barriers.','新型聯合方法——未經證實。雙重成本/報銷障礙。')},
+  {n:'CD + Tirzepatide — COMMIT-CD',ph:'Phase 3',st:'a',dt:'May 2028',
+   brief:()=>tx('n=290. CDAI + endoscopic + 10% wt loss.','n=290。CDAI+內鏡+10%減重。'),
+   hyp:()=>tx('Simultaneous CDAI remission, endoscopic remission, and ≥10% weight reduction in CD + obesity.','CD+肥胖中同時CDAI緩解、內鏡緩解和≥10%減重。'),
+   res:()=>tx('Ongoing.','進行中。'),
+   stats:()=>tx('n=290 | May 2028','n=290 | 2028年5月'),
+   risk:()=>tx('Triple composite endpoint is ambitious. Small sample.','三重複合終點雄心勃勃。小樣本。')},
+  {n:'UC Long-term — LUCENT-3',ph:'Phase 3',st:'a',dt:'Jul 2026',
+   brief:()=>tx('n=1,063. Long-term clinical remission maintenance.','n=1,063。長期臨床緩解維持。'),
+   hyp:()=>tx('Percentage of participants in clinical remission in long-term UC maintenance.','長期UC維持中臨床緩解的參與者百分比。'),
+   res:()=>tx('Ongoing. Primary completion Jul 2026.','進行中。主要完成2026年7月。'),
+   stats:()=>tx('n=1,063 | Clinical remission | Jul 2026','n=1,063 | 臨床緩解 | 2026年7月'),
+   risk:()=>tx('Long-term data important for competitive positioning vs dupilumab, ustekinumab, and emerging JAK inhibitors.','長期數據對vs dupilumab、ustekinumab和新興JAK抑制劑的競爭定位重要。')},
+]},
+{id:'verve',nm:'VERVE-102 / VERVE-201',gn:'Gene Editors · PCSK9 / ANGPTL3',ta:'cm',ph:'p1',
+ pl:()=>tx('Phase 1','第一期'),tal:()=>tx('Cardiometabolic','心血管代謝'),
+ mech:()=>tx('In vivo base editing: VERVE-102 targets PCSK9, VERVE-201 targets ANGPTL3 — for permanent LDL/lipid lowering with a single treatment ("one-and-done"). From Verve Therapeutics acquisition.','體內鹼基編輯：VERVE-102靶向PCSK9，VERVE-201靶向ANGPTL3——單次治療永久降低LDL/脂質（「一次性」）。來自Verve Therapeutics收購。'),
+ rev:()=>tx('PCSK9 editor Phase 1: n=85, Aug 2026. ANGPTL3 editor Phase 1b: n=36, Dec 2027. Transformative long-term potential.','PCSK9編輯器一期：n=85，2026年8月。ANGPTL3編輯器1b期：n=36，2027年12月。長期具變革潛力。'),
+ inds:[
+  {n:'PCSK9 Editor — FH/ASCVD',ph:'Phase 1',st:'a',dt:'Aug 2026',
+   brief:()=>tx('n=85. Safety endpoints. One-and-done CV therapy.','n=85。安全性終點。一次性CV療法。'),
+   hyp:()=>tx('Safety and tolerability of in vivo base editing targeting PCSK9 in patients with familial hypercholesterolemia or premature CAD.','靶向PCSK9的體內鹼基編輯在家族性高膽固醇血症或早發CAD患者中的安全性和耐受性。'),
+   res:()=>tx('Ongoing.','進行中。'),
+   stats:()=>tx('n=85 | TEAEs/SAEs | Aug 2026','n=85 | TEAEs/SAEs | 2026年8月'),
+   risk:()=>tx('Gene editing is permanent — any off-target effects cannot be reversed. First-in-class risk. Regulatory pathway uncertain for permanent genetic modifications.','基因編輯是永久的——任何脫靶效應無法逆轉。首創風險。永久基因修改的監管路徑不確定。')},
+  {n:'ANGPTL3 Editor — Hyperlipidemia',ph:'Phase 1b',st:'a',dt:'Dec 2027',
+   brief:()=>tx('n=36. Refractory hyperlipidemia.','n=36。難治性高脂血症。'),
+   hyp:()=>tx('Safety of VERVE-201 in patients with refractory hyperlipidemia.','VERVE-201在難治性高脂血症患者中的安全性。'),
+   res:()=>tx('Ongoing.','進行中。'),
+   stats:()=>tx('n=36 | Dec 2027','n=36 | 2027年12月'),
+   risk:()=>tx('Very early stage. Same gene editing permanence concerns as PCSK9 editor.','非常早期。與PCSK9編輯器相同的基因編輯永久性擔憂。')},
+]},
+{id:'elt',nm:'Eltrekibart + MORF-057',gn:'Integrin α4β7 / CXCL5 · IBD Pipeline',ta:'im',ph:'p2',
+ pl:()=>tx('Phase 2','第二期'),tal:()=>tx('Immunology','免疫學'),
+ mech:()=>tx('Eltrekibart: anti-CXCL5 for IBD. MORF-057 (from Morphic/Ventyx acquisition): oral integrin α4β7 inhibitor for UC and Crohn\'s. Novel gut-selective approaches with oral convenience.','Eltrekibart：抗CXCL5用於IBD。MORF-057（來自Morphic/Ventyx收購）：口服整合素α4β7抑制劑用於UC和克羅恩病。新型腸道選擇性口服方法。'),
+ rev:()=>tx('MORF-057 UC (EMERALD-2): n=280. Crohn\'s (GARNET): n=385. Combo with mirikizumab (TOPAZ-UC): n=252. Eltrekibart UC+mirikizumab: n=140. HS: n=352.','MORF-057 UC（EMERALD-2）：n=280。克羅恩（GARNET）：n=385。與mirikizumab聯合（TOPAZ-UC）：n=252。Eltrekibart UC+mirikizumab：n=140。HS：n=352。'),
+ inds:[
+  {n:'MORF-057 UC — EMERALD-2',ph:'Phase 2',st:'a',dt:'Aug 2026',
+   brief:()=>tx('n=280. Clinical remission by mMCS.','n=280。mMCS臨床緩解。'),
+   hyp:()=>tx('Clinical remission at Week 12 by Modified Mayo Clinic Score in moderately-to-severely active UC.','中重度活動性UC中第12週mMCS臨床緩解。'),
+   res:()=>tx('Primary completion Nov 2024. Results expected.','主要完成2024年11月。預計出結果。'),
+   stats:()=>tx('n=280 | mMCS | Nov 2024 primary','n=280 | mMCS | 2024年11月主要完成'),
+   risk:()=>tx('Oral integrin approach competes with vedolizumab (established IV). Must show oral convenience + competitive efficacy.','口服整合素方法與vedolizumab（已建立IV）競爭。必須展示口服便利性+有競爭力的療效。')},
+  {n:'MORF-057 Crohn\'s — GARNET',ph:'Phase 2',st:'a',dt:'Nov 2026',
+   brief:()=>tx('n=385. Endoscopic response.','n=385。內鏡應答。'),
+   hyp:()=>tx('Endoscopic response at Week 14 by SES-CD in moderately-to-severely active CD.','中重度活動性CD中第14週SES-CD內鏡應答。'),
+   res:()=>tx('Ongoing.','進行中。'),
+   stats:()=>tx('n=385 | SES-CD | Nov 2026','n=385 | SES-CD | 2026年11月'),
+   risk:()=>tx('Crohn\'s is harder to treat than UC. Need strong endoscopic data.','克羅恩比UC更難治療。需要強有力的內鏡數據。')},
+  {n:'Eltrekibart Hidradenitis Suppurativa',ph:'Phase 2',st:'a',dt:'Aug 2026',
+   brief:()=>tx('n=352. HiSCR50 response.','n=352。HiSCR50應答。'),
+   hyp:()=>tx('HiSCR50 in moderate-to-severe hidradenitis suppurativa.','中重度化膿性汗腺炎中的HiSCR50。'),
+   res:()=>tx('Primary completion Sep 2025.','主要完成2025年9月。'),
+   stats:()=>tx('n=352 | HiSCR50 | Sep 2025 primary','n=352 | HiSCR50 | 2025年9月主要完成'),
+   risk:()=>tx('HS is competitive (adalimumab, secukinumab). Novel mechanism needs differentiation.','HS競爭激烈（阿達木單抗、secukinumab）。新機制需差異化。')},
+]},
+];
+
+function sL(l,btn){
+  lang=l;
+  document.querySelectorAll('.lb').forEach(b=>b.classList.remove('act'));
+  btn.classList.add('act');
+  // Update all static i18n elements
+  document.querySelectorAll('[data-i]').forEach(el=>{
+    const k=el.getAttribute('data-i');
+    if(T[l][k]){
+      if(el.tagName==='INPUT')el.placeholder=T[l][k];
+      else el.textContent=T[l][k];
+    }
+  });
+  // Rebuild all filter rows
+  buildPills();buildPhPills();buildStPills();
+  // Update dot legend
+  buildDotLeg();
+  rp();
+}
+
+function buildPills(){
+  const t=T[lang];
+  document.getElementById('pillBox').innerHTML=
+    `<button class="pill${tf==='all'?' act':''}" onclick="fTA('all')">${t.fAll}</button>`+
+    `<button class="pill${tf==='cm'?' act':''}" onclick="fTA('cm')">${t.fCM}</button>`+
+    `<button class="pill${tf==='on'?' act':''}" onclick="fTA('on')">${t.fON}</button>`+
+    `<button class="pill${tf==='im'?' act':''}" onclick="fTA('im')">${t.fIM}</button>`+
+    `<button class="pill${tf==='ns'?' act':''}" onclick="fTA('ns')">${t.fNS}</button>`;
+}
+
+function buildDotLeg(){
+  const t=T[lang];
+  document.getElementById('dotLeg').innerHTML=
+    `${t.dotLeg} `+
+    `<span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:50%;background:var(--green);display:inline-block"></span> ${t.dotS}</span>`+
+    `<span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:50%;background:var(--blue);display:inline-block"></span> ${t.dotA}</span>`+
+    `<span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:50%;background:var(--gold);display:inline-block"></span> ${t.dotP}</span>`+
+    `<span style="margin-left:8px;font-style:italic">${t.dotClick}</span>`;
+}
+
+function fTA(f){tf=f;buildPills();rp()}
+function fPH(f){phF=f;buildPhPills();rp()}
+function fST(f){stF=f;buildStPills();rp()}
+
+function buildPhPills(){
+  const t=T[lang];
+  document.getElementById('phPills').innerHTML=
+    ['all','approved','review','p3','p2','p1'].map(v=>{
+      const labels={all:t.phAll,approved:t.phAppr,review:t.phRev,p3:t.phP3,p2:t.phP2,p1:t.phP1};
+      return `<button class="pill2${phF===v?' act':''}" onclick="fPH('${v}')">${labels[v]}</button>`;
+    }).join('');
+}
+
+function buildStPills(){
+  const t=T[lang];
+  document.getElementById('stPills').innerHTML=
+    ['all','s','a','p'].map(v=>{
+      const labels={all:t.stAll,s:t.stS,a:t.stA,p:t.stP};
+      const colors={all:'',s:'var(--green)',a:'var(--blue)',p:'var(--gold)'};
+      const dot=v!=='all'?`<span style="width:8px;height:8px;border-radius:50%;background:${colors[v]};display:inline-block"></span> `:'';
+      return `<button class="pill2${stF===v?' act':''}" onclick="fST('${v}')">${dot}${labels[v]}</button>`;
+    }).join('');
+}
+
+function toggleAll(){
+  allExpanded=!allExpanded;
+  document.querySelectorAll('.dc').forEach(c=>{
+    if(allExpanded)c.classList.add('open');
+    else c.classList.remove('open');
+  });
+  const t=T[lang];
+  document.querySelector('#expAllBtn span').textContent=allExpanded?t.colAll:t.expAll;
+  document.querySelector('#expAllBtn').innerHTML=(allExpanded?'⊟ ':'⊞ ')+`<span>${allExpanded?t.colAll:t.expAll}</span>`;
+}
+
+function rp(){
+  allExpanded=false;
+  const expBtn=document.querySelector('#expAllBtn');
+  if(expBtn){const t2=T[lang];expBtn.innerHTML='⊞ <span>'+t2.expAll+'</span>';}
+  const t=T[lang],g=document.getElementById('pg'),s=(document.getElementById('si').value||'').toLowerCase();
+  let f=D;
+  // TA filter
+  if(tf!=='all')f=f.filter(d=>d.ta===tf);
+  // Phase filter
+  if(phF!=='all')f=f.filter(d=>d.ph===phF);
+  // Status filter: keep drugs that have at least one matching trial status
+  if(stF!=='all')f=f.filter(d=>d.inds.some(i=>i.st===stF));
+  // Search
+  if(s)f=f.filter(d=>d.nm.toLowerCase().includes(s)||d.gn.toLowerCase().includes(s)||d.inds.some(i=>i.n.toLowerCase().includes(s)));
+  g.innerHTML='';
+
+  // Empty state
+  if(f.length===0){
+    g.innerHTML=`<div class="empty-state">
+      <div class="es-icon">🔍</div>
+      <div class="es-title">${t.emptyTitle}</div>
+      <div class="es-sub">${t.emptySub}</div>
+    </div>`;
+    return;
+  }
+  f.forEach(d=>{
+    const pc=d.ph==='approved'?'approved':d.ph==='review'?'review':d.ph==='p3'?'p3':d.ph==='p2'?'p2':'p1';
+    const dots=d.inds.map(i=>`<span class="${i.st}"></span>`).join('');
+    const filteredInds=stF!=='all'?d.inds.filter(i=>i.st===stF):d.inds;
+    let ih='';filteredInds.forEach((ind)=>{
+      const origIdx=d.inds.indexOf(ind);
+      const sl=ind.st==='s'?t.stPosS:ind.st==='a'?t.stActS:t.stPlanS;
+      const phLabel=phTx(ind.ph);
+      ih+=`<div class="ir" onclick="event.stopPropagation();oM('${d.id}',${origIdx})">
+        <div class="ir-top"><div class="ir-name">${ind.n}</div><div class="ir-meta"><span class="pp ${ind.ph.includes('3')?'p3':ind.ph.includes('Approved')?'approved':ind.ph.includes('Filed')||ind.ph.includes('Reg')?'review':ind.ph.includes('2')?'p2':'p1'}" style="font-size:12px;padding:3px 8px">${phLabel}</span><span class="ir-st ${ind.st}">${sl}</span><span class="ir-dt">${ind.dt}</span></div></div>
+        <div class="ir-brief">${ind.brief()}</div>
+        <div class="ir-click">${t.clickHint}</div>
+      </div>`;
+    });
+    const c=document.createElement('div');c.className='dc';c.setAttribute('data-id',d.id);
+    c.innerHTML=`<div class="dh" onclick="tC('${d.id}')">
+      <span class="ei">▼</span>
+      <div><div class="dn">${d.nm}</div><div class="dg">${d.gn}</div></div>
+      <div><span class="pp ${pc}">${d.pl()}</span></div>
+      <div class="cta"><span class="tc2 ${d.ta}">${d.tal()}</span></div>
+      <div class="ct"><div class="ti"><strong>${filteredInds.length}</strong>${stF!=='all'&&filteredInds.length!==d.inds.length?' / '+d.inds.length:''} ${t.indLabel}</div><div class="tds">${dots}</div></div>
+      <span class="ei">▼</span>
+    </div>
+    <div class="dd"><div class="di">
+      <div class="dtabs"><div class="dtab act" onclick="event.stopPropagation();sT(this,'${d.id}','ti')">${t.tabI}</div><div class="dtab" onclick="event.stopPropagation();sT(this,'${d.id}','tm')">${t.tabM}</div><div class="dtab" onclick="event.stopPropagation();sT(this,'${d.id}','tr')">${t.tabR}</div></div>
+      <div class="dtc act" data-t="ti" data-d="${d.id}"><div class="il">${ih}</div></div>
+      <div class="dtc" data-t="tm" data-d="${d.id}"><div class="ibox"><h5>${t.tabM}</h5><p>${d.mech()}</p></div></div>
+      <div class="dtc" data-t="tr" data-d="${d.id}"><div class="ibox"><h5>${t.tabR}</h5><p>${d.rev()}</p></div></div>
+    </div></div>`;
+    g.appendChild(c);
+  });
+}
+
+function tC(id){
+  const c=document.querySelector(`.dc[data-id="${id}"]`),o=c.classList.contains('open');
+  document.querySelectorAll('.dc').forEach(x=>x.classList.remove('open'));
+  if(!o)c.classList.add('open');
+  // Reset expand-all state
+  if(allExpanded){allExpanded=false;const t=T[lang];document.querySelector('#expAllBtn').innerHTML='⊞ <span>'+t.expAll+'</span>';}
+}
+function sT(el,did,tn){const c=document.querySelector(`.dc[data-id="${did}"]`);c.querySelectorAll('.dtab').forEach(t=>t.classList.remove('act'));c.querySelectorAll('.dtc').forEach(t=>t.classList.remove('act'));el.classList.add('act');c.querySelector(`.dtc[data-t="${tn}"][data-d="${did}"]`).classList.add('act')}
+
+function oM(did,idx){
+  const t=T[lang],d=D.find(x=>x.id===did),ind=d.inds[idx];if(!ind.hyp)return;
+  const sc=ind.st==='s'?'var(--green)':ind.st==='a'?'var(--blue)':'var(--gold)';
+  const sl=ind.st==='s'?t.stPos:ind.st==='a'?t.stAct:t.stPlan;
+  const ppc=ind.ph.includes('Approved')||ind.ph.includes('已')?'approved':ind.ph.includes('Filed')||ind.ph.includes('Reg')?'review':ind.ph.includes('3')?'p3':ind.ph.includes('2')?'p2':'p1';
+  let riskH='';
+  if(ind.risk)riskH=`<div class="ms"><div class="ms-title" style="color:#f87171"><span class="dot" style="background:#f87171"></span> ${t.mRisk}</div><div class="rf-box"><p>${ind.risk()}</p></div></div>`;
+  let resH=ind.res?`<div class="ms"><div class="ms-title" style="color:var(--teal)"><span class="dot" style="background:var(--teal)"></span> ${t.mRes}</div>${ind.st==='s'?'<div class="pos-box"><p>'+ind.res()+'</p></div>':'<div class="ibox"><p>'+ind.res()+'</p></div>'}</div>`:'';
+  document.getElementById('mc').innerHTML=`
+    <div class="mh">
+      <div class="mh-name">${ind.n}</div>
+      <div class="mh-drug">${d.nm} · ${d.gn}</div>
+      <div class="mh-badges"><span class="pp ${ppc}" style="font-size:13px">${phTx(ind.ph)}</span><span style="font-size:14px;font-weight:bold;color:${sc};padding:4px 12px;background:rgba(255,255,255,.05);border-radius:6px">${sl}</span><span style="font-size:13px;color:var(--t3);padding:4px 12px;background:var(--s3);border-radius:6px">${ind.dt}</span></div>
+    </div>
+    <div class="mb">
+      <div class="ms"><div class="ms-title" style="color:var(--blue)"><span class="dot" style="background:var(--blue)"></span> ${t.mHyp}</div><div class="ibox"><p>${ind.hyp()}</p></div></div>
+      ${resH}
+      <div class="ms"><div class="ms-title" style="color:var(--purple)"><span class="dot" style="background:var(--purple)"></span> ${t.mStat}</div><div class="ibox"><p>${ind.stats()}</p></div></div>
+      ${riskH}
+    </div>`;
+  document.getElementById('modal').classList.add('show');
+  document.body.style.overflow='hidden';
+}
+function closeModal(){document.getElementById('modal').classList.remove('show');document.body.style.overflow=''}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+
+// Initial render
+buildPills();buildPhPills();buildStPills();buildDotLeg();rp();
+</script>
+</body>
+</html>
