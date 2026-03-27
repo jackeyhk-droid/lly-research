@@ -131,9 +131,31 @@ h1 .br{color:var(--red)}
 .pos-box p{font-size:15px;color:var(--teal);line-height:1.7}
 .footer{border-top:1px solid var(--bdr);padding:24px 0;text-align:center;font-size:13px;color:var(--t3)}
 ::-webkit-scrollbar{width:6px;height:6px}::-webkit-scrollbar-track{background:var(--dk)}::-webkit-scrollbar-thumb{background:var(--s3);border-radius:3px}
+#pwd-screen{position:fixed;inset:0;z-index:9999;background:var(--dk);display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:'Inter',system-ui,sans-serif;color:var(--t1)}
+#pwd-screen::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,rgba(213,43,30,.06) 0%,transparent 60%);pointer-events:none}
+#pwd-screen::after{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(213,43,30,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(213,43,30,.02) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;opacity:.5}
+.pwd-box{position:relative;z-index:1;background:var(--s1);border:1px solid var(--bdr);padding:36px 40px;border-radius:16px;text-align:center;box-shadow:0 16px 40px rgba(0,0,0,0.6);width:100%;max-width:380px}
+.pwd-box h2{margin:0 0 12px;font-size:22px;font-weight:700;letter-spacing:-0.5px}
+.pwd-box p{color:var(--t2);font-size:14px;margin-bottom:24px;line-height:1.5}
+.pwd-input{width:100%;padding:14px;background:var(--dk);border:1px solid var(--bdr);color:var(--t1);border-radius:8px;font-size:18px;margin-bottom:16px;outline:none;text-align:center;letter-spacing:4px;transition:border-color 0.2s;box-sizing:border-box;font-family:'Inter',system-ui,sans-serif}
+.pwd-input:focus{border-color:var(--red)}
+.pwd-btn{width:100%;padding:14px;background:var(--red);color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600;letter-spacing:0.5px;cursor:pointer;transition:background 0.2s;font-family:'Inter',system-ui,sans-serif}
+.pwd-btn:hover{background:#b82318}
+#pwd-error{color:#ef4444;font-size:13px;margin-top:14px;display:none;font-weight:500}
+.app-wrap{display:none}
 </style>
 </head>
 <body>
+<div id="pwd-screen">
+  <div class="pwd-box">
+    <h2>🔒 Private Access</h2>
+    <p>Please enter the password to view the LLY Research Pipeline Dashboard.</p>
+    <input type="password" id="pwd-input" class="pwd-input" placeholder="••••••••" onkeypress="if(event.key==='Enter')checkPwd()">
+    <button class="pwd-btn" onclick="checkPwd()">Unlock Dashboard</button>
+    <div id="pwd-error">Incorrect password. Please try again.</div>
+  </div>
+</div>
+<div class="app-wrap">
 <div class="modal-overlay" id="modal" onclick="if(event.target===this)closeModal()">
   <div class="modal"><button class="modal-close" onclick="closeModal()">✕</button><div id="mc"></div></div>
 </div>
@@ -541,6 +563,18 @@ const D=[
    res:()=>tx('Ongoing. Results expected later in 2026.','進行中。預計2026年晚些時候出結果。'),
    stats:()=>tx('n=310 | 52-week extension | NCT05735483 | Apr 2029 completion','n=310 | 52週延伸 | NCT05735483 | 2029年4月完成'),
    risk:()=>tx('Long-term pediatric data is critical for full regulatory submission and physician confidence. Must confirm sustained efficacy and safety in growing children.','長期兒科數據對完整監管提交和醫師信心至關重要。必須確認在成長中兒童中的持續療效和安全性。')},
+  {n:'ADjoin 4-Year — Long-Term Durability',ph:'Phase 3',st:'s',dt:'Mar 27, 2026 ✓',
+   brief:()=>tx('<strong>4-year durable disease control</strong> demonstrated in ADjoin extension. >80% maintained EASI-75. Supports long-term treatment confidence. Released today.','<strong>4年持久疾病控制</strong>在ADjoin延伸研究中展示。>80%維持EASI-75。支持長期治療信心。今日發布。'),
+   hyp:()=>tx('Evaluate long-term (4-year) durability of disease control with EBGLYSS in adults and adolescents with moderate-to-severe atopic dermatitis, extending the previously reported 3-year ADjoin data. Patients from ADvocate 1/2, ADhere, ADore, and ADopt-VA parent studies enrolled in ADjoin for continued treatment.','評估EBGLYSS在中重度特應性皮膚炎成人和青少年中的長期（4年）疾病控制持久性，延續此前報告的3年ADjoin數據。來自ADvocate 1/2、ADhere、ADore和ADopt-VA母研究的患者加入ADjoin繼續治療。'),
+   res:()=>tx('<strong>Durable disease control maintained at 4 years.</strong> Building on 3-year data (Sep 2024): >80% maintained IGA 0,1 clear/almost clear skin; 84% (Q4W) and 83% (Q2W) maintained EASI-75; 87% (Q4W) achieved/maintained EASI-90. Now extended to 4 years with sustained results. Safety profile consistent with prior analyses — no new signals. Combined with Q8W data (Oct 2025: 79% EASI-75 Q8W vs 86% Q4W), supports EBGLYSS as the only selective IL-13 inhibitor with 4-year durability evidence and Q8W maintenance flexibility.','<strong>4年維持持久疾病控制。</strong>在3年數據（2024年9月）基礎上延伸：>80%維持IGA 0,1清除/幾乎清除皮膚；84%（Q4W）和83%（Q2W）維持EASI-75；87%（Q4W）達到/維持EASI-90。現延伸至4年且結果持續。安全性與先前分析一致——無新信號。結合Q8W數據（2025年10月：79% EASI-75 Q8W vs 86% Q4W），支持EBGLYSS作為唯一具有4年持久性證據和Q8W維持靈活性的選擇性IL-13抑制劑。'),
+   stats:()=>tx('ADjoin extension (NCT04392154) | ~4 years continuous treatment | Q4W and Q2W arms | From ADvocate 1/2 parent studies | Released Mar 27, 2026','ADjoin延伸研究（NCT04392154）| ~4年持續治療 | Q4W和Q2W組 | 來自ADvocate 1/2母研究 | 2026年3月27日發布'),
+   risk:()=>tx('Open-label extension — no placebo comparator after 16 weeks. Patients who discontinued are not captured, creating potential survivorship bias. Q12W dosing analysis still ongoing — if successful, could further reduce injection burden. Competitive: dupilumab (Dupixent) has 5+ years of real-world evidence; EBGLYSS must continue building long-term dataset to match. However, EBGLYSS Q8W maintenance (6 doses/year) is a clear differentiator vs dupilumab\'s Q2W (26 doses/year).','開放標籤延伸——16週後無安慰劑對照。停藥患者未被捕獲，可能存在倖存者偏倚。Q12W劑量分析仍在進行中——如果成功，可進一步減少注射負擔。競爭：dupilumab（Dupixent）有5年以上真實世界證據；EBGLYSS必須繼續建立長期數據集以匹配。然而，EBGLYSS Q8W維持（每年6次）vs dupilumab的Q2W（每年26次）是明確的差異化因素。')},
+  {n:'ADjoin Q8W — Every-8-Week Maintenance',ph:'Phase 3',st:'s',dt:'Oct 2025 ✓',
+   brief:()=>tx('<strong>Q8W ≈ Q4W</strong>: 79% EASI-75 (Q8W) vs 86% (Q4W). 62% IGA 0,1 (Q8W) vs 73% (Q4W). Half the doses. Filed with FDA.','<strong>Q8W ≈ Q4W</strong>：79% EASI-75（Q8W）vs 86%（Q4W）。62% IGA 0,1（Q8W）vs 73%（Q4W）。劑量減半。已向FDA提交。'),
+   hyp:()=>tx('Evaluate whether EBGLYSS 250mg Q8W (every 8 weeks) maintains comparable disease control to approved Q4W (monthly) dosing in moderate-to-severe AD.','評估EBGLYSS 250mg Q8W（每8週）是否在中重度AD中維持與已獲批Q4W（每月）劑量相當的疾病控制。'),
+   res:()=>tx('Q8W vs Q4W: EASI-75: 79% vs 86%. IGA 0,1: 62% vs 73%. No increased immunogenicity (anti-drug antibodies). No new safety findings. Submitted to FDA for potential Q8W label update. If approved, EBGLYSS would offer as few as 6 maintenance doses per year.','Q8W vs Q4W：EASI-75：79% vs 86%。IGA 0,1：62% vs 73%。無免疫原性增加（抗藥物抗體）。無新安全性發現。已向FDA提交Q8W標籤更新。如獲批，EBGLYSS每年最少僅需6次維持劑量。'),
+   stats:()=>tx('ADjoin Q8W extension | 32 weeks Q8W vs Q4W | Open-label | NCT04392154 | Oct 2025 | Presented Fall Clinical Derm 2025','ADjoin Q8W延伸 | 32週Q8W vs Q4W | 開放標籤 | NCT04392154 | 2025年10月 | 2025年秋季臨床皮膚科學會議報告'),
+   risk:()=>tx('Q8W efficacy numerically lower than Q4W (~7% gap on EASI-75, ~11% on IGA 0,1). Not a formal non-inferiority trial — descriptive comparison only. Some patients may need Q4W to maintain optimal control. Q12W (500mg every 12 weeks) analysis ongoing with Almirall — could further extend dosing intervals.','Q8W療效在數值上低於Q4W（EASI-75差~7%，IGA 0,1差~11%）。非正式非劣效試驗——僅為描述性比較。部分患者可能需要Q4W以維持最佳控制。Q12W（每12週500mg）分析正在與Almirall進行中——可能進一步延長給藥間隔。')},
   {n:'CRSwNP — CONTRAST-NP',ph:'Phase 3',st:'a',dt:'May 2027',
    brief:()=>tx('n=510. Nasal congestion severity score.','n=510。鼻塞嚴重程度評分。'),
    hyp:()=>tx('Mean change from baseline in participant-reported nasal congestion score severity in CRSwNP with intranasal corticosteroids.','CRSwNP合併鼻內皮質類固醇中參與者報告的鼻塞評分嚴重程度的基線平均變化。'),
@@ -971,6 +1005,20 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
 
 // Initial render
 buildPills();buildPhPills();buildStPills();buildDotLeg();rp();
+
+function checkPwd(){
+  var myPassword="23008133";
+  var input=document.getElementById("pwd-input").value;
+  if(input===myPassword){
+    document.getElementById("pwd-screen").style.display="none";
+    document.querySelector(".app-wrap").style.display="block";
+  }else{
+    document.getElementById("pwd-error").style.display="block";
+    document.getElementById("pwd-input").value="";
+    document.getElementById("pwd-input").focus();
+  }
+}
 </script>
+</div><!-- end app-wrap -->
 </body>
 </html>
