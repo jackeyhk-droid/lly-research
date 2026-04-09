@@ -1007,16 +1007,22 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
 buildPills();buildPhPills();buildStPills();buildDotLeg();rp();
 
 function checkPwd(){
-  var myPassword="23008133";
   var input=document.getElementById("pwd-input").value;
-  if(input===myPassword){
-    document.getElementById("pwd-screen").style.display="none";
-    document.querySelector(".app-wrap").style.display="block";
-  }else{
-    document.getElementById("pwd-error").style.display="block";
-    document.getElementById("pwd-input").value="";
-    document.getElementById("pwd-input").focus();
-  }
+  var storedHash="bebc79734038e684e2d9bd00f8a0bcebb96fbffbdb699ffd076732806fe1cde0";
+  var encoder=new TextEncoder();
+  var data=encoder.encode(input);
+  crypto.subtle.digest("SHA-256",data).then(function(buffer){
+    var hashArray=Array.from(new Uint8Array(buffer));
+    var hashHex=hashArray.map(function(b){return b.toString(16).padStart(2,"0")}).join("");
+    if(hashHex===storedHash){
+      document.getElementById("pwd-screen").style.display="none";
+      document.querySelector(".app-wrap").style.display="block";
+    }else{
+      document.getElementById("pwd-error").style.display="block";
+      document.getElementById("pwd-input").value="";
+      document.getElementById("pwd-input").focus();
+    }
+  });
 }
 </script>
 </div><!-- end app-wrap -->
