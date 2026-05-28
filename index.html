@@ -161,7 +161,7 @@ h1 .br{color:var(--red)}
 </div>
 
 <div class="hero"><div class="ctr"><div class="hrow">
-  <div><h1><span class="br">Eli Lilly</span> <span data-i="h1">Research Pipeline</span></h1><div class="sub" data-i="hsub">Interactive Drug Development Tracker · NYSE: LLY · Updated May 25, 2026</div></div>
+  <div><h1><span class="br">Eli Lilly</span> <span data-i="h1">Research Pipeline</span></h1><div class="sub" data-i="hsub">Interactive Drug Development Tracker · NYSE: LLY · Updated May 28, 2026</div></div>
   <div class="ctrls"><input class="sb" id="si" data-i="search_ph" oninput="rp()"><div class="ltog"><button class="lb act" onclick="sL('en',this)">EN</button><button class="lb" onclick="sL('tc',this)">繁中</button></div></div>
 </div></div></div>
 
@@ -227,7 +227,7 @@ h1 .br{color:var(--red)}
   <div id="dotLeg" style="font-size:14px;color:var(--t3);margin-bottom:14px;display:flex;gap:16px;align-items:center;flex-wrap:wrap"></div>
   <div class="pg" id="pg"></div>
 </div>
-<div class="footer" data-i="footer">Disclaimer: For informational purposes only — not investment advice. Updated May 25, 2026. Source: investor.lilly.com (earnings, presentations, press releases), SEC filings, NEJM, Lancet, clinicaltrials.gov.</div>
+<div class="footer" data-i="footer">Disclaimer: For informational purposes only — not investment advice. Updated May 28, 2026. Source: investor.lilly.com (earnings, presentations, press releases), SEC filings, NEJM, Lancet, clinicaltrials.gov.</div>
 </div>
 
 <script>
@@ -241,7 +241,7 @@ window.addEventListener('scroll',()=>{
 
 // Static translations
 const T={en:{
-h1:'Research Pipeline',hsub:'Interactive Drug Development Tracker · NYSE: LLY · Updated May 25, 2026',search_ph:'Search drug or indication...',
+h1:'Research Pipeline',hsub:'Interactive Drug Development Tracker · NYSE: LLY · Updated May 28, 2026',search_ph:'Search drug or indication...',
 kpi_t:'FY2025 REVENUE BY PRODUCT (USD)',mj_d:'T2D · GIP/GLP-1',zb_d:'Obesity · Tirzepatide',vz_d:'Breast Cancer · CDK4/6',tl_d:'Psoriasis · IL-17A',oth_l:'Other Key Products',tot_l:'Total Revenue',
 g26:'2026 Guidance (Non-GAAP) ↑ Raised Apr 30',gR:'Revenue',gRs:'+28% midpoint · Q1 +56%',gEs:'+50% midpoint · Q1 $8.55 (beat)',gPM:'Perf. Margin',gO:'Foundayo™ US',gOs:'Apr 9, 2026 · $25–149/mo',
 fda_t:'FDA Approval Timeline — Near-Term Catalysts',pip_t:'Drug Development Pipeline',
@@ -259,9 +259,9 @@ phAll:'All',phAppr:'Approved',phRev:'Reg Review',phP3:'Phase 3',phP2:'Phase 2',p
 stAll:'All',stS:'Positive',stA:'Active',stP:'Planned',
 expAll:'Expand All',colAll:'Collapse All',
 emptyTitle:'No drugs match this criteria',emptySub:'Try adjusting your filters or search keywords',
-footer:'Disclaimer: For informational purposes only — not investment advice. Updated May 25, 2026. Source: investor.lilly.com (earnings, presentations, press releases), SEC filings, NEJM, Lancet, clinicaltrials.gov.'
+footer:'Disclaimer: For informational purposes only — not investment advice. Updated May 28, 2026. Source: investor.lilly.com (earnings, presentations, press releases), SEC filings, NEJM, Lancet, clinicaltrials.gov.'
 },tc:{
-h1:'研究管線總覽',hsub:'互動式藥物開發追蹤器 · NYSE: LLY · 更新日期2026年5月25日',search_ph:'搜索藥物或適應症...',
+h1:'研究管線總覽',hsub:'互動式藥物開發追蹤器 · NYSE: LLY · 更新日期2026年5月28日',search_ph:'搜索藥物或適應症...',
 kpi_t:'FY2025各產品收入（美元）',mj_d:'二型糖尿病 · GIP/GLP-1',zb_d:'肥胖症 · 替爾泊肽',vz_d:'乳腺癌 · CDK4/6',tl_d:'銀屑病 · IL-17A',oth_l:'其他主要產品',tot_l:'總收入',
 g26:'2026年指引（Non-GAAP）↑ 4月30日上修',gR:'收入',gRs:'+28%中值 · Q1 +56%',gEs:'+50%中值 · Q1 $8.55（超預期）',gPM:'績效利潤率',gO:'Foundayo™ 美國',gOs:'2026年4月9日上市·每月25–149美元',
 fda_t:'FDA審批時間線 — 近期催化劑',pip_t:'藥物開發管線',
@@ -279,7 +279,7 @@ phAll:'全部',phAppr:'已獲批',phRev:'審查中',phP3:'第三期',phP2:'第�
 stAll:'全部',stS:'正面',stA:'進行中',stP:'計劃中',
 expAll:'展開全部',colAll:'收合全部',
 emptyTitle:'找不到符合此條件的藥物',emptySub:'請嘗試調整篩選條件或搜索關鍵字',
-footer:'免責聲明：僅供參考，不構成投資建議。更新日期：2026年5月25日。來源：investor.lilly.com（財報、簡報、新聞稿）、SEC文件、NEJM、Lancet、clinicaltrials.gov。'
+footer:'免責聲明：僅供參考，不構成投資建議。更新日期：2026年5月28日。來源：investor.lilly.com（財報、簡報、新聞稿）、SEC文件、NEJM、Lancet、clinicaltrials.gov。'
 }};
 
 // Bilingual helper
@@ -291,7 +291,7 @@ const D=[
 {id:'orf',nm:'Orforglipron',gn:'Foundayo™ · LY3502970 · Oral GLP-1 RA',ta:'cm',ph:'approved',
  pl:()=>tx('FDA Approved ✓','FDA已獲批 ✓'),tal:()=>tx('Cardiometabolic','心血管代謝'),
  mech:()=>tx('FDA-approved (Apr 1, 2026) once-daily oral non-peptide GLP-1 receptor agonist. Brand name Foundayo™. The first non-peptide oral GLP-1 approved for obesity — can be taken any time of day without food/water restrictions, unlike oral Wegovy (requires empty stomach + 30min fast). Small molecule — enables large-scale oral manufacturing at lower cost than peptide formulations, driving the "industrialization of obesity treatment." Discovered by Chugai, licensed to Lilly 2018. US launch Apr 9, 2026 via LillyDirect, telehealth, and retail pharmacies. Pricing: $25/mo with commercial insurance, $149/mo self-pay.','FDA已獲批（2026年4月1日）的每日一次口服非肽類GLP-1受體激動劑。品牌名Foundayo™。首個獲批的非肽類口服GLP-1肥胖藥——可在一天中任何時間服用，無食物/飲水限制，有別於口服Wegovy（需空腹+30分鐘禁食）。小分子——可大規模口服製造，成本低於肽類配方，推動「肥胖治療工業化」。由中外製藥發現，2018年授權予禮來。2026年4月9日在美國透過LillyDirect、遠距醫療和零售藥房上市。定價：商業保險每月25美元，自費每月149美元。'),
- rev:()=>tx('<strong>US LAUNCH TODAY (Apr 9, 2026)</strong> — Available via LillyDirect®, telehealth providers, and US retail pharmacies beginning today. FDA approved Apr 1, 2026 under National Priority Review Voucher. ATTAIN-1: avg 27.3 lbs (12.4%) weight loss at highest dose (36mg). <strong>Pricing:</strong> $25/mo commercial insurance, $149/mo self-pay (lowest dose), $50/mo Medicare Part D (from Jul 1, 2026). Submitted 40+ countries. T2D submission H1 2026. Analysts: ~$13.6B peak sales by 2030 (60% of oral GLP-1 market).','<strong>美國今日上市（2026年4月9日）</strong>——今日起透過LillyDirect®、遠距醫療供應商和美國零售藥房供應。FDA於2026年4月1日透過國家優先審查券批准。ATTAIN-1：最高劑量（36mg）平均減重27.3磅（12.4%）。<strong>定價：</strong>商業保險每月25美元，自費每月149美元（最低劑量），Medicare Part D每月50美元（2026年7月1日起）。已在40+國家提交。T2D提交2026年H1。分析師：2030年峰值~136億美元（口服GLP-1市場60%）。'),
+ rev:()=>tx('<strong>US LAUNCH (Apr 9, 2026)</strong> — Available via LillyDirect®, telehealth, and US retail pharmacies. FDA approved Apr 1, 2026 under National Priority Review Voucher. ATTAIN-1: avg 27.3 lbs (12.4%) weight loss at highest dose (36mg). <strong>📋 PBM ACCESS MILESTONE (May 28, 2026):</strong> All three largest PBMs now cover Lilly\'s full obesity portfolio. CVS Caremark begins covering Foundayo June 1; Zepbound coverage broadens across template plans by Oct 1. <strong>Pricing:</strong> as low as $25/mo with commercial insurance, $149/mo self-pay (lowest dose), $50/mo Medicare Part D GLP-1 Bridge (from Jul 1, 2026). Submitted 40+ countries. T2D submission H1 2026. Analysts: ~$13.6B peak sales by 2030 (60% of oral GLP-1 market).','<strong>美國上市（2026年4月9日）</strong>——透過LillyDirect®、遠距醫療和美國零售藥房供應。FDA於2026年4月1日透過國家優先審查券批准。ATTAIN-1：最高劑量（36mg）平均減重27.3磅（12.4%）。<strong>📋 PBM准入里程碑（2026年5月28日）：</strong>三大最大PBM現已全面承保禮來肥胖產品組合。CVS Caremark於6月1日開始承保Foundayo；Zepbound承保於10月1日擴展至各範本計劃。<strong>定價：</strong>商業保險低至每月25美元，自費每月149美元（最低劑量），Medicare Part D GLP-1 Bridge每月50美元（2026年7月1日起）。已在40+國家提交。T2D提交2026年H1。分析師：2030年峰值~136億美元（口服GLP-1市場60%）。'),
  inds:[
   {n:'ATTAIN-1 — Obesity',ph:'Phase 3',st:'s',dt:'Aug 2025',
    brief:()=>tx('<strong>12.4% wt loss</strong> at 36mg/72wk. Published NEJM. n=3,127.','<strong>12.4%體重減輕</strong>（36mg/72週）。NEJM發表。n=3,127。'),
