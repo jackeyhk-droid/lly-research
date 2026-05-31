@@ -161,7 +161,7 @@ h1 .br{color:var(--red)}
 </div>
 
 <div class="hero"><div class="ctr"><div class="hrow">
-  <div><h1><span class="br">Eli Lilly</span> <span data-i="h1">Research Pipeline</span></h1><div class="sub" data-i="hsub">Interactive Drug Development Tracker · NYSE: LLY · Updated May 28, 2026</div></div>
+  <div><h1><span class="br">Eli Lilly</span> <span data-i="h1">Research Pipeline</span></h1><div class="sub" data-i="hsub">Interactive Drug Development Tracker · NYSE: LLY · Updated May 31, 2026</div></div>
   <div class="ctrls"><input class="sb" id="si" data-i="search_ph" oninput="rp()"><div class="ltog"><button class="lb act" onclick="sL('en',this)">EN</button><button class="lb" onclick="sL('tc',this)">繁中</button></div></div>
 </div></div></div>
 
@@ -227,7 +227,7 @@ h1 .br{color:var(--red)}
   <div id="dotLeg" style="font-size:14px;color:var(--t3);margin-bottom:14px;display:flex;gap:16px;align-items:center;flex-wrap:wrap"></div>
   <div class="pg" id="pg"></div>
 </div>
-<div class="footer" data-i="footer">Disclaimer: For informational purposes only — not investment advice. Updated May 28, 2026. Source: investor.lilly.com (earnings, presentations, press releases), SEC filings, NEJM, Lancet, clinicaltrials.gov.</div>
+<div class="footer" data-i="footer">Disclaimer: For informational purposes only — not investment advice. Updated May 31, 2026. Source: investor.lilly.com (earnings, presentations, press releases), SEC filings, NEJM, Lancet, clinicaltrials.gov.</div>
 </div>
 
 <script>
@@ -241,7 +241,7 @@ window.addEventListener('scroll',()=>{
 
 // Static translations
 const T={en:{
-h1:'Research Pipeline',hsub:'Interactive Drug Development Tracker · NYSE: LLY · Updated May 28, 2026',search_ph:'Search drug or indication...',
+h1:'Research Pipeline',hsub:'Interactive Drug Development Tracker · NYSE: LLY · Updated May 31, 2026',search_ph:'Search drug or indication...',
 kpi_t:'FY2025 REVENUE BY PRODUCT (USD)',mj_d:'T2D · GIP/GLP-1',zb_d:'Obesity · Tirzepatide',vz_d:'Breast Cancer · CDK4/6',tl_d:'Psoriasis · IL-17A',oth_l:'Other Key Products',tot_l:'Total Revenue',
 g26:'2026 Guidance (Non-GAAP) ↑ Raised Apr 30',gR:'Revenue',gRs:'+28% midpoint · Q1 +56%',gEs:'+50% midpoint · Q1 $8.55 (beat)',gPM:'Perf. Margin',gO:'Foundayo™ US',gOs:'Apr 9, 2026 · $25–149/mo',
 fda_t:'FDA Approval Timeline — Near-Term Catalysts',pip_t:'Drug Development Pipeline',
@@ -259,9 +259,9 @@ phAll:'All',phAppr:'Approved',phRev:'Reg Review',phP3:'Phase 3',phP2:'Phase 2',p
 stAll:'All',stS:'Positive',stA:'Active',stP:'Planned',
 expAll:'Expand All',colAll:'Collapse All',
 emptyTitle:'No drugs match this criteria',emptySub:'Try adjusting your filters or search keywords',
-footer:'Disclaimer: For informational purposes only — not investment advice. Updated May 28, 2026. Source: investor.lilly.com (earnings, presentations, press releases), SEC filings, NEJM, Lancet, clinicaltrials.gov.'
+footer:'Disclaimer: For informational purposes only — not investment advice. Updated May 31, 2026. Source: investor.lilly.com (earnings, presentations, press releases), SEC filings, NEJM, Lancet, clinicaltrials.gov.'
 },tc:{
-h1:'研究管線總覽',hsub:'互動式藥物開發追蹤器 · NYSE: LLY · 更新日期2026年5月28日',search_ph:'搜索藥物或適應症...',
+h1:'研究管線總覽',hsub:'互動式藥物開發追蹤器 · NYSE: LLY · 更新日期2026年5月31日',search_ph:'搜索藥物或適應症...',
 kpi_t:'FY2025各產品收入（美元）',mj_d:'二型糖尿病 · GIP/GLP-1',zb_d:'肥胖症 · 替爾泊肽',vz_d:'乳腺癌 · CDK4/6',tl_d:'銀屑病 · IL-17A',oth_l:'其他主要產品',tot_l:'總收入',
 g26:'2026年指引（Non-GAAP）↑ 4月30日上修',gR:'收入',gRs:'+28%中值 · Q1 +56%',gEs:'+50%中值 · Q1 $8.55（超預期）',gPM:'績效利潤率',gO:'Foundayo™ 美國',gOs:'2026年4月9日上市·每月25–149美元',
 fda_t:'FDA審批時間線 — 近期催化劑',pip_t:'藥物開發管線',
@@ -279,7 +279,7 @@ phAll:'全部',phAppr:'已獲批',phRev:'審查中',phP3:'第三期',phP2:'第�
 stAll:'全部',stS:'正面',stA:'進行中',stP:'計劃中',
 expAll:'展開全部',colAll:'收合全部',
 emptyTitle:'找不到符合此條件的藥物',emptySub:'請嘗試調整篩選條件或搜索關鍵字',
-footer:'免責聲明：僅供參考，不構成投資建議。更新日期：2026年5月28日。來源：investor.lilly.com（財報、簡報、新聞稿）、SEC文件、NEJM、Lancet、clinicaltrials.gov。'
+footer:'免責聲明：僅供參考，不構成投資建議。更新日期：2026年5月31日。來源：investor.lilly.com（財報、簡報、新聞稿）、SEC文件、NEJM、Lancet、clinicaltrials.gov。'
 }};
 
 // Bilingual helper
@@ -701,6 +701,30 @@ const D=[
    res:()=>tx('Enrolling. Early BC is much larger market than metastatic.','入組中。早期BC市場遠大於轉移性。'),
    stats:()=>tx('n=8,000 | IDFS | Oct 2027 primary | Mar 2032 final','n=8,000 | IDFS | 2027年10月主要 | 2032年3月最終'),
    risk:()=>tx('Massive trial. Years to full readout. But early BC market is transformative if positive.','大規模試驗。數年才能完全讀出。但如果正面，早期BC市場具變革性。')},
+]},
+{id:'rete',nm:'Selpercatinib',gn:'Retevmo · RET Kinase Inhibitor',ta:'on',ph:'approved',
+ pl:()=>tx('Approved','已獲批'),tal:()=>tx('Oncology','腫瘤學'),
+ mech:()=>tx('Highly selective and potent oral RET (rearranged during transfection) kinase inhibitor. Formerly LOXO-292 (Loxo Oncology, acquired by Lilly 2019). First targeted therapy for RET-altered cancers — approved 2020. RET fusions occur in 1-2% of NSCLC and most papillary thyroid cancers; RET mutations drive most medullary thyroid cancers. Designed for CNS penetration to address brain metastases.','高選擇性、強效口服RET（轉染重排）激酶抑制劑。前身LOXO-292（Loxo Oncology，2019年被禮來收購）。首個RET變異癌症靶向療法——2020年獲批。RET融合見於1-2%的NSCLC和大多數乳頭狀甲狀腺癌；RET突變驅動大多數髓質甲狀腺癌。設計用於CNS穿透以解決腦轉移。'),
+ rev:()=>tx('Marketed since 2020 for metastatic RET+ NSCLC and RET-altered thyroid cancers. <strong>LIBRETTO-432 (May 31, 2026) is the franchise-expanding catalyst</strong> — moves Retevmo from late-stage/metastatic into the much larger early-stage adjuvant NSCLC setting. Establishes RET fusion as a key biomarker to test across all NSCLC disease stages. Reinforces Lilly oncology pillar alongside Jaypirca and Inluriyo.','自2020年上市用於轉移性RET+ NSCLC和RET變異甲狀腺癌。<strong>LIBRETTO-432（2026年5月31日）是特許經營擴展催化劑</strong>——將Retevmo從晚期/轉移性推進至更大的早期輔助NSCLC領域。確立RET融合為跨所有NSCLC疾病階段檢測的關鍵生物標記。強化禮來腫瘤學支柱，與Jaypirca和Inluriyo並列。'),
+ inds:[
+  {n:'LIBRETTO-432 — Adjuvant Early NSCLC',ph:'Phase 3',st:'s',dt:'May 31, 2026 ✓',
+   brief:()=>tx('<strong>83% reduction in recurrence/death risk</strong> (HR 0.17) as adjuvant therapy in early-stage RET+ NSCLC. 24-mo EFS 92% vs 61%. ASCO plenary + NEJM. Released today.','<strong>復發/死亡風險降低83%</strong>（HR 0.17），作為早期RET+ NSCLC輔助治療。24個月EFS 92% vs 61%。ASCO全體會議+NEJM。今日發布。'),
+   hyp:()=>tx('LIBRETTO-432 (NCT04819100): Phase 3, randomized, double-blind, placebo-controlled trial of selpercatinib as adjuvant therapy vs placebo in patients with early-stage (IB-IIIA) RET fusion-positive NSCLC who had undergone potentially curative surgery or radiotherapy (± adjuvant chemotherapy). n=151 randomized 1:1. Primary endpoint: investigator-assessed event-free survival (EFS) in the primary analysis population (stage II-IIIA, n=109). This is the first trial to test a RET inhibitor in the curative-intent early-stage setting — a much larger and higher-value population than metastatic disease.','LIBRETTO-432（NCT04819100）：selpercatinib作為輔助治療vs安慰劑的三期、隨機、雙盲、安慰劑對照試驗，用於接受潛在治癒性手術或放療（±輔助化療）的早期（IB-IIIA）RET融合陽性NSCLC患者。n=151，1:1隨機。主要終點：研究者評估的主要分析人群（II-IIIA期，n=109）無事件生存期（EFS）。這是首個在治癒性早期環境中測試RET抑制劑的試驗——較轉移性疾病更大、更高價值的人群。'),
+   res:()=>tx('<strong>Met primary endpoint with a highly statistically significant and clinically meaningful EFS improvement.</strong> Selpercatinib reduced the risk of disease recurrence or death by <strong>83% vs placebo (HR 0.17, P=0.0003)</strong> in the stage II-IIIA primary analysis population. At median 24-month follow-up: <strong>24-month EFS rate 92% (selpercatinib) vs 61% (placebo)</strong>. Median EFS <strong>not reached</strong> for selpercatinib vs 31.8 months for placebo — a durable benefit signal. Lead investigator (Dr. Jonathan Goldman, UCLA) described outcomes as "striking." Data simultaneously published in the New England Journal of Medicine and presented at the 2026 ASCO Annual Meeting Plenary Session (Chicago). Establishes selpercatinib as a potential new standard of care in adjuvant RET+ NSCLC and underscores the importance of RET fusion biomarker testing across all disease stages.','<strong>達到主要終點，EFS改善具高度統計學顯著性和臨床意義。</strong>Selpercatinib在II-IIIA期主要分析人群中使疾病復發或死亡風險<strong>相較安慰劑降低83%（HR 0.17，P=0.0003）</strong>。中位24個月隨訪：<strong>24個月EFS率92%（selpercatinib）vs 61%（安慰劑）</strong>。Selpercatinib中位EFS<strong>未達到</strong>vs安慰劑31.8個月——持久益處信號。首席研究者（UCLA的Jonathan Goldman醫生）將結果描述為「驚人」。數據同步發表於新英格蘭醫學雜誌並於2026年ASCO年會全體會議（芝加哥）報告。確立selpercatinib為輔助RET+ NSCLC潛在新治療標準，並強調跨所有疾病階段RET融合生物標記檢測的重要性。'),
+   stats:()=>tx('Phase 3 | NCT04819100 | n=151 (primary analysis n=109, stage II-IIIA) | HR 0.17, P=0.0003 | 24-mo EFS 92% vs 61% | Median EFS NR vs 31.8mo | NEJM + ASCO 2026 plenary | Released May 31, 2026','三期 | NCT04819100 | n=151（主要分析n=109，II-IIIA期）| HR 0.17，P=0.0003 | 24個月EFS 92% vs 61% | 中位EFS未達 vs 31.8個月 | NEJM+ASCO 2026全體會議 | 2026年5月31日發布'),
+   risk:()=>tx('<strong>Small trial (n=151, primary analysis n=109)</strong> reflecting the rarity of RET fusions (1-2% of NSCLC) — limits absolute patient numbers and statistical robustness vs larger adjuvant trials (e.g. EGFR ADAURA n=682). Overall survival (OS) data immature — EFS is a surrogate; long-term OS benefit not yet proven. <strong>Hepatotoxicity signal:</strong> Grade 3+ ALT elevation 17% vs 1% placebo, AST 19% vs 3% — manageable with dose modification but requires LFT monitoring in the adjuvant (otherwise-healthy post-surgical) population where tolerability bar is higher. Adjuvant treatment duration/optimal length not yet established. Commercial: the addressable population is small in absolute terms given RET rarity, and success depends on broad biomarker testing uptake — many early-stage NSCLC patients are not currently RET-tested. Competitive: limited direct competition (selpercatinib is the dominant RET inhibitor; pralsetinib/Gavreto largely withdrawn), so the main barrier is diagnosis/testing rather than rival drugs. Still a meaningful franchise extension but modest in dollar terms relative to Lilly\'s obesity/diabetes engine.','<strong>小型試驗（n=151，主要分析n=109）</strong>反映RET融合的罕見性（NSCLC的1-2%）——限制絕對患者數和統計穩健性，相較更大的輔助試驗（如EGFR ADAURA n=682）。總生存期（OS）數據不成熟——EFS是替代終點；長期OS益處尚未證明。<strong>肝毒性信號：</strong>3級以上ALT升高17% vs安慰劑1%，AST 19% vs 3%——可透過劑量調整管理，但在耐受性門檻更高的輔助（原本健康的術後）人群中需要肝功能監測。輔助治療持續時間/最佳長度尚未確立。商業：鑑於RET罕見性，可觸達人群絕對數量小，成功取決於廣泛的生物標記檢測採用——許多早期NSCLC患者目前未進行RET檢測。競爭：直接競爭有限（selpercatinib是主導的RET抑制劑；pralsetinib/Gavreto大致退出），故主要障礙是診斷/檢測而非競爭藥物。仍是有意義的特許經營擴展，但相對於禮來的肥胖/糖尿病引擎，以美元計適中。')},
+  {n:'LIBRETTO-001 — Metastatic RET+ NSCLC',ph:'Approved',st:'s',dt:'2020 ✓',
+   brief:()=>tx('Foundational approval. High, durable response rates in metastatic RET fusion+ NSCLC.','基礎批准。轉移性RET融合+ NSCLC中高且持久的反應率。'),
+   hyp:()=>tx('Objective response rate (ORR) and duration of response of selpercatinib in advanced RET fusion-positive NSCLC, including treatment-naïve and previously treated patients.','晚期RET融合陽性NSCLC（含初治和既往治療患者）中selpercatinib的客觀反應率（ORR）和反應持續時間。'),
+   res:()=>tx('High ORR with durable responses and meaningful CNS activity. Basis for initial FDA accelerated approval (May 2020), later converted to full approval. Established selpercatinib as standard of care in metastatic RET+ NSCLC.','高ORR伴持久反應和有意義的CNS活性。初始FDA加速批准基礎（2020年5月），後轉為完全批准。確立selpercatinib為轉移性RET+ NSCLC治療標準。'),
+   stats:()=>tx('Phase 1/2 basket trial | FDA approved May 2020 | Full approval confirmed','一/二期籃子試驗 | FDA 2020年5月批准 | 完全批准確認'),
+   risk:()=>tx('Mature/established indication. Main growth now comes from earlier-stage expansion (LIBRETTO-432) and broader biomarker testing rather than the metastatic setting itself.','成熟/既定適應症。主要增長現來自早期擴展（LIBRETTO-432）和更廣泛的生物標記檢測，而非轉移性環境本身。')},
+  {n:'RET-Altered Thyroid Cancers',ph:'Approved',st:'s',dt:'2020 ✓',
+   brief:()=>tx('Approved for RET-mutant medullary + RET fusion+ thyroid cancers.','獲批用於RET突變髓質+RET融合+甲狀腺癌。'),
+   hyp:()=>tx('Efficacy in RET-mutant medullary thyroid cancer (MTC) and RET fusion-positive thyroid cancer.','RET突變髓質甲狀腺癌（MTC）和RET融合陽性甲狀腺癌中的療效。'),
+   res:()=>tx('High response rates across RET-mutant MTC and RET fusion+ thyroid cancer. Part of original 2020 multi-tumor approval — among first tumor-agnostic-style RET targeting.','RET突變MTC和RET融合+甲狀腺癌均有高反應率。原始2020年多腫瘤批准的一部分——最早的腫瘤不可知式RET靶向之一。'),
+   stats:()=>tx('Phase 1/2 | FDA approved 2020 | MTC + thyroid','一/二期 | FDA 2020年批准 | MTC+甲狀腺'),
+   risk:()=>tx('Niche populations. Stable contributor but not a major growth driver vs the NSCLC expansion.','利基人群。穩定貢獻者但相較NSCLC擴展非主要增長驅動。')},
 ]},
 {id:'sof',nm:'Sofetabart Mipitecan',gn:'FRα ADC · Antibody-Drug Conjugate',ta:'on',ph:'p3',
  pl:()=>tx('Phase 1b → Phase 3','第1b期→第三期'),tal:()=>tx('Oncology','腫瘤學'),
